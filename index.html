@@ -1,100 +1,230 @@
-:root {
-    --primary-color: #ff6600;
-    --primary-hover: #e05500;
-    --bg-color: #fdfbf7;
-    --card-bg: #ffffff;
-    --text-color: #333333;
-    --border-color: #ffe6d5;
-}
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    margin: 0;
-    padding: 20px;
-}
-.header {
-    text-align: center;
-    margin-bottom: 30px;
-    padding-bottom: 10px;
-    border-bottom: 3px solid var(--primary-color);
-}
-.header h1 {
-    color: var(--primary-color);
-    margin: 0 0 10px 0;
-    font-size: 28px;
-}
-.header p {
-    margin: 0;
-    color: #666;
-    font-size: 14px;
-}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kho Ứng Dụng APK</title>
+    <style>
+        :root {
+            --primary-color: #ff6600;
+            --primary-hover: #e05500;
+            --bg-color: #fdfbf7;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #ffe6d5;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--primary-color);
+            width: 100%;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .header h1 {
+            color: var(--primary-color);
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        .header p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
 
-/* --- CẤU HÌNH GRID CHIA CỘT CHUẨN MỚI --- */
-.grid-container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Mặc định chia đều thành 3 cột */
-    gap: 20px; /* Khoảng cách giữa các card */
-}
+        /* --- CẤU HÌNH GRID CHIA 3 CỘT --- */
+        .grid-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
 
-.apk-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 16px;
-    box-shadow: 0 2px 5px rgba(255, 102, 0, 0.05);
-    transition: all 0.2s ease-in-out;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-.apk-card:hover {
-    border-color: var(--primary-color);
-    box-shadow: 0 4px 10px rgba(255, 102, 0, 0.15);
-    transform: translateY(-2px);
-}
-.apk-info {
-    overflow: hidden;
-    margin-bottom: 12px;
-}
-.title-app {
-    display: block;
-    font-weight: bold;
-    font-size: 17px;
-    color: #111;
-    margin-bottom: 6px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.apk-size {
-    display: block;
-    font-size: 13px;
-    color: #666;
-}
-.btn-download {
-    display: block;
-    text-align: center;
-    background-color: var(--primary-color);
-    color: #fff;
-    padding: 8px 12px;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: 500;
-    font-size: 14px;
-    transition: background 0.2s;
-}
-.btn-download:hover {
-    background-color: var(--primary-hover);
-}
+        .apk-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 2px 5px rgba(255, 102, 0, 0.05);
+            transition: all 0.2s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .apk-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 10px rgba(255, 102, 0, 0.15);
+            transform: translateY(-2px);
+        }
+        .apk-info {
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        .title-app {
+            display: block;
+            font-weight: bold;
+            font-size: 17px;
+            color: #111;
+            margin-bottom: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .apk-size {
+            display: block;
+            font-size: 13px;
+            color: #666;
+        }
+        .btn-download {
+            display: block;
+            text-align: center;
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 8px 12px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        .btn-download:hover {
+            background-color: var(--primary-hover);
+        }
 
-/* --- CẤU HÌNH ĐÁP ỨNG CHO DI ĐỘNG --- */
-@media (max-width: 768px) { 
-    .grid-container { grid-template-columns: repeat(2, 1fr); } /* Máy tính bảng hiện 2 cột */
-}
-@media (max-width: 480px) { 
-    .grid-container { grid-template-columns: repeat(1, 1fr); } /* Điện thoại hiện 1 cột */
-}
+        /* --- CẤU HÌNH CHO MOBILE & TABLET --- */
+        @media (max-width: 768px) { 
+            .grid-container { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) { 
+            .grid-container { grid-template-columns: repeat(1, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>KHO ỨNG DỤNG APK</h1>
+        <p>Tải xuống trực tiếp ứng dụng dành cho Android TV & Mobile</p>
+    </div>
+
+    <div class="grid-container">
+
+        <div class="apk-card app-remote-adb">
+            <div class="apk-info">
+                <span class="title-app">Remote ADB</span>
+                <span class="apk-size">Dung lượng: 2.1 MB</span>
+            </div>
+            <a href="adb.apk" class="btn-download" download>Tải Về</a>
+        </div>
+
+        <div class="apk-card app-co-tv">
+            <div class="apk-info">
+                <span class="title-app">Cò TV</span>
+                <span class="apk-size">Dung lượng: 27.8 MB</span>
+            </div>
+            <a href="cotv.apk" class="btn-download" download>Tải Về</a>
+        </div>
+
+        <div class="apk-card app-get-out">
+            <div class="apk-info">
+                <span class="title-app">Get Out</span>
+                <span class="apk-size">Dung lượng: 13.7 MB</span>
+            </div>
+            <a href="getout.apk" class="btn-download" download>Tải Về</a>
+        </div>
+
+        <div class="apk-card app-imou-camera">
+            <div class="apk-info">
+                <span class="title-app">IMOU Camera</span>
+                <span class="apk-size">Dung lượng: 71.8 MB</span>
+            </div>
+            <a href="imou.apk" class="btn-download" download>Tải Về</a>
+        </div>
+
+        <div class="apk-card app-mstore2">
+            <div class="apk-info">
+                <span class="title-app">MStore2</span>
+                <span class="apk-size">Dung lượng: 12.6 MB</span>
+            </div>
+            <a href="mstore.apk" class="btn-download" download>Tải Về</a>
+        </div>
+
+        <div class="apk-card app-netflix">
+            <div class="apk-info">
+                <span class="title-app">Netflix dùng chuột</span>
+                <span class="apk-size">Dung lượng: 70.3 MB</span>
+            </div>
+            <a href="netflix.apk" class="btn-download" download>Tải Về</a>
+        </div>
+
+        <div class="apk-card app-ok-player">
+            <div class="apk-info">
+                <span class="title-app">OK Player</span>
+                <span class="apk-size">Dung lượng: 78.9 MB</span>
+            </div>
+            <a href="oktivi.apk" class="btn-download" download>Tải Về</a>
+        </div>
+
+        <div class="apk-card app-phim4k">
+            <div class="apk-info">
+                <span class="title-app">Phim 4K</span>
+                <span class="apk-size">Dung lượng: 13.8 MB</span>
+            </div>
+            <a href="phim4k.apk" class="btn-download" download>Tải Về</a>
+        </div>
+
+        <div class="apk-card app-quantv">
+            <div class="apk-info">
+                <span class="title-app">QuanTV</span>
+                <span class="apk-size">Dung lượng: 8.1 MB</span>
+            </div>
+            <a href="quantv.apk" class="btn-download" download>Tải Về</a>
+        </div>
+
+        <div class="apk-card app-tiktok-lite">
+            <div class="apk-info">
+                <span class="title-app">TikTok Lite</span>
+                <span class="apk-size">Dung lượng: 26.4 MB</span>
+            </div>
+            <a href="tiktok.apk" class="btn-download" download>Tải Về</a>
+        </div>
+
+        <div class="apk-card app-tvbro">
+            <div class="apk-info">
+                <span class="title-app">Trình duyệt TV Bro</span>
+                <span class="apk-size">Dung lượng: 5.4 MB</span>
+            </div>
+            <a href="tvbro.apk" class="btn-download" download>Tải Về</a>
+        </div>
+
+        <div class="apk-card app-ytb">
+            <div class="apk-info">
+                <span class="title-app">YouTube TV</span>
+                <span class="apk-size">Dung lượng: 15.5 MB</span>
+            </div>
+            <a href="ytb.apk" class="btn-download" download>Tải Về</a>
+        </div>
+
+        <div class="apk-card app-googletv-ytb">
+            <div class="apk-info">
+                <span class="title-app">Youtube cho GoogleTV</span>
+                <span class="apk-size">Dung lượng: 15.6 MB</span>
+            </div>
+            <a href="ytb2.apk" class="btn-download" download>Tải Về</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
