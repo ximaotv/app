@@ -41,13 +41,13 @@
             font-size: 14px;
         }
 
-        /* --- CẤU HÌNH GRID CHIA 3 CỘT --- */
+        /* --- CẤU HÌNH GRID CHIA 2 CỘT --- */
         .grid-container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr); /* Đổi từ 3 thành 2 cột */
             gap: 20px;
         }
 
@@ -102,12 +102,11 @@
             background-color: var(--primary-hover);
         }
 
-        /* --- CẤU HÌNH CHO MOBILE & TABLET --- */
-        @media (max-width: 768px) { 
-            .grid-container { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 480px) { 
-            .grid-container { grid-template-columns: repeat(1, 1fr); }
+        /* --- CẤU HÌNH CHO MOBILE --- */
+        @media (max-width: 580px) { 
+            .grid-container { 
+                grid-template-columns: repeat(1, 1fr); /* Màn hình điện thoại nhỏ chuyển về 1 cột dọc */
+            }
         }
     </style>
 </head>
