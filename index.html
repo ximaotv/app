@@ -85,17 +85,21 @@
             text-align: center;
             background-color: var(--primary-color);
             color: #fff;
-            padding: 8px 12px;
+            padding: 14px 20px;
             text-decoration: none;
-            border-radius: 6px;
-            font-weight: 500;
-            font-size: 14px;
-            transition: background 0.2s;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 6px rgba(255, 102, 0, 0.2);
         }
         .btn-download:hover {
             background-color: var(--primary-hover);
+            transform: scale(1.02);
         }
-
+        .btn-download:active {
+            transform: scale(0.98);
+        }
         /* --- CẤU HÌNH CHO MOBILE --- */
         @media (max-width: 580px) { 
             .grid-container { 
