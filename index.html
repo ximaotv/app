@@ -100,6 +100,13 @@
         .btn-download:active {
             transform: scale(0.98);
         }
+        .download-count {
+            display: block;
+            margin-top: 5px;
+            color: #777;
+            font-size: 13px;
+        }
+
         /* --- CẤU HÌNH CHO MOBILE --- */
         @media (max-width: 580px) { 
             .grid-container { 
@@ -273,6 +280,67 @@
         </div>
 
     </div>
+
+    <script>
+        (() => {
+            const API = 'https://api.counterapi.dev/v1/ximaotv-app-downloads';
+            const DAY = 24 * 60 * 60 * 1000;
+            const numberFormat = new Intl.NumberFormat('vi-VN');
+
+            const valueOf = (data) => Number(data?.count ?? data?.Count ?? data?.value ?? data?.Value ?? 0);
+
+            document.querySelectorAll('.btn-download').forEach((button) => {
+                const url = new URL(button.href, location.href);
+                const file = decodeURIComponent(url.pathname.split('/').pop());
+                const key = file.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                const storageKey = 'ximaotv-download:' + key;
+                const count = document.createElement('span');
+
+                count.className = 'download-count';
+                count.textContent = 'Đang tải số lượt...';
+                button.closest('.apk-card').querySelector('.apk-info').appendChild(count);
+
+                fetch(API + '/' + key)
+                    .then((response) => response.ok ? response.json() : { count: 0 })
+                    .then((data) => {
+                        count.dataset.value = valueOf(data);
+                        count.textContent = numberFormat.format(valueOf(data)) + ' lượt tải';
+                    })
+                    .catch(() => {
+                        count.textContent = 'Chưa có dữ liệu lượt tải';
+                    });
+
+                button.addEventListener('click', async (event) => {
+                    const lastCounted = Number(localStorage.getItem(storageKey) || 0);
+                    if (Date.now() - lastCounted < DAY) return;
+
+                    event.preventDefault();
+                    if (button.dataset.counting === '1') return;
+                    button.dataset.counting = '1';
+                    localStorage.setItem(storageKey, String(Date.now()));
+
+                    try {
+                        const response = await fetch(API + '/' + key + '/up');
+                        if (!response.ok) throw new Error('Counter unavailable');
+                        const data = await response.json();
+                        const value = valueOf(data);
+                        count.dataset.value = value;
+                        count.textContent = numberFormat.format(value) + ' lượt tải';
+                    } catch {
+                        localStorage.removeItem(storageKey);
+                    } finally {
+                        button.dataset.counting = '0';
+                        const download = document.createElement('a');
+                        download.href = url.href;
+                        download.download = file;
+                        document.body.appendChild(download);
+                        download.click();
+                        download.remove();
+                    }
+                });
+            });
+        })();
+    </script>
 
 </body>
 </html>
