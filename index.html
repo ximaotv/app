@@ -287,49 +287,48 @@
 
     <script>
         (() => {
-            const API = 'https://api.counterapi.dev/v1/ximaotv-app-downloads';
-            const DAY = 24 * 60 * 60 * 1000;
+            const API = 'https://viet-xiaomi-tv-download.viet-ng228.workers.dev/app-downloads';
+            const DEDUPE_TIME = 30 * 60 * 1000;
             const numberFormat = new Intl.NumberFormat('vi-VN');
+            const visitorKey = 'ximaotv-download-visitor';
+            let visitorId = localStorage.getItem(visitorKey);
 
-            const valueOf = (data) => Number(data?.count ?? data?.Count ?? data?.value ?? data?.Value ?? 0);
+            if (!visitorId) {
+                visitorId = crypto.randomUUID();
+                localStorage.setItem(visitorKey, visitorId);
+            }
 
+            const cards = new Map();
             document.querySelectorAll('.btn-download').forEach((button) => {
                 const url = new URL(button.href, location.href);
                 const file = decodeURIComponent(url.pathname.split('/').pop());
                 const key = file.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-                const storageKey = 'ximaotv-download:' + key;
                 const count = document.createElement('span');
 
                 count.className = 'download-count';
                 count.textContent = 'Đang tải số lượt...';
                 button.closest('.apk-card').querySelector('.apk-info').appendChild(count);
-
-                fetch(API + '/' + key)
-                    .then((response) => response.ok ? response.json() : { count: 0 })
-                    .then((data) => {
-                        count.dataset.value = valueOf(data);
-                        count.textContent = numberFormat.format(valueOf(data)) + ' lượt tải';
-                    })
-                    .catch(() => {
-                        count.textContent = 'Chưa có dữ liệu lượt tải';
-                    });
+                cards.set(key, count);
 
                 button.addEventListener('click', async (event) => {
+                    const storageKey = 'ximaotv-download:' + key;
                     const lastCounted = Number(localStorage.getItem(storageKey) || 0);
-                    if (Date.now() - lastCounted < DAY) return;
+                    if (Date.now() - lastCounted < DEDUPE_TIME) return;
 
                     event.preventDefault();
                     if (button.dataset.counting === '1') return;
                     button.dataset.counting = '1';
-                    localStorage.setItem(storageKey, String(Date.now()));
 
                     try {
-                        const response = await fetch(API + '/' + key + '/up');
+                        const response = await fetch(API + '/' + key, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ visitorId })
+                        });
                         if (!response.ok) throw new Error('Counter unavailable');
                         const data = await response.json();
-                        const value = valueOf(data);
-                        count.dataset.value = value;
-                        count.textContent = numberFormat.format(value) + ' lượt tải';
+                        count.textContent = numberFormat.format(Number(data.count) || 0) + ' lượt tải';
+                        localStorage.setItem(storageKey, String(Date.now()));
                     } catch {
                         localStorage.removeItem(storageKey);
                     } finally {
@@ -343,6 +342,20 @@
                     }
                 });
             });
+
+            fetch(API)
+                .then((response) => {
+                    if (!response.ok) throw new Error('Counter unavailable');
+                    return response.json();
+                })
+                .then((data) => {
+                    for (const [key, count] of cards) {
+                        count.textContent = numberFormat.format(Number(data.counts?.[key]) || 0) + ' lượt tải';
+                    }
+                })
+                .catch(() => {
+                    for (const count of cards.values()) count.textContent = 'Chưa có dữ liệu lượt tải';
+                });
         })();
     </script>
 
