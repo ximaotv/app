@@ -170,6 +170,20 @@
             text-align: center;
         }
 
+        .nav-pill-hot {
+            background-color: #fff0e6;
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        .nav-pill-hot:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+        .hot-section .category-title {
+            color: #e8341c;
+            border-left-color: #e8341c;
+        }
+
         /* --- CẤU HÌNH CHO MOBILE --- */
         @media (max-width: 580px) {
             .grid-container {
@@ -191,6 +205,7 @@
     </div>
 
     <nav class="category-nav">
+            <a href="#cat-hot" class="nav-pill nav-pill-hot" id="nav-hot" style="display:none;">🔥 Hot</a>
             <a href="#cat-phim" class="nav-pill">🎬 Xem Phim</a>
             <a href="#cat-tv" class="nav-pill">📡 Truyền Hình / IPTV</a>
             <a href="#cat-youtube" class="nav-pill">▶️ YouTube</a>
@@ -198,6 +213,11 @@
             <a href="#cat-camera" class="nav-pill">📷 Camera An Ninh</a>
             <a href="#cat-khac" class="nav-pill">🧰 Ứng Dụng Khác</a>
     </nav>
+
+    <section class="category-section hot-section" id="cat-hot" style="display:none;">
+        <h2 class="category-title">🔥 Ứng Dụng Hot</h2>
+        <div class="grid-container" id="hot-grid"></div>
+    </section>
 
     <section class="category-section" id="cat-phim">
         <h2 class="category-title">🎬 Xem Phim</h2>
@@ -489,6 +509,7 @@
         (() => {
             const API = 'https://viet-xiaomi-tv-download.viet-ng228.workers.dev/app-downloads';
             const DEDUPE_TIME = 30 * 60 * 1000;
+            const HOT_COUNT = 8;
             const numberFormat = new Intl.NumberFormat('vi-VN');
             const visitorKey = 'ximaotv-download-visitor';
             let visitorId = localStorage.getItem(visitorKey);
@@ -498,18 +519,7 @@
                 localStorage.setItem(visitorKey, visitorId);
             }
 
-            const cards = new Map();
-            document.querySelectorAll('.btn-download').forEach((button) => {
-                const url = new URL(button.href, location.href);
-                const file = decodeURIComponent(url.pathname.split('/').pop());
-                const key = file.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-                const count = document.createElement('span');
-
-                count.className = 'download-count';
-                count.textContent = 'Đang tải số lượt...';
-                button.closest('.apk-card').querySelector('.apk-info').appendChild(count);
-                cards.set(key, count);
-
+            function bindDownloadButton(button, key, url, file, countEl) {
                 button.addEventListener('click', async (event) => {
                     const storageKey = 'ximaotv-download:' + key;
                     const lastCounted = Number(localStorage.getItem(storageKey) || 0);
@@ -527,20 +537,36 @@
                         });
                         if (!response.ok) throw new Error('Counter unavailable');
                         const data = await response.json();
-                        count.textContent = numberFormat.format(Number(data.count) || 0) + ' lượt tải';
+                        countEl.textContent = numberFormat.format(Number(data.count) || 0) + ' lượt tải';
                         localStorage.setItem(storageKey, String(Date.now()));
                     } catch {
                         localStorage.removeItem(storageKey);
                     } finally {
                         button.dataset.counting = '0';
                         const download = document.createElement('a');
-                        download.href = url.href;
+                        download.href = url;
                         download.download = file;
                         document.body.appendChild(download);
                         download.click();
                         download.remove();
                     }
                 });
+            }
+
+            const entries = [];
+            document.querySelectorAll('.category-section:not(.hot-section) .apk-card').forEach((card) => {
+                const button = card.querySelector('.btn-download');
+                const url = new URL(button.href, location.href);
+                const file = decodeURIComponent(url.pathname.split('/').pop());
+                const key = file.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                const count = document.createElement('span');
+
+                count.className = 'download-count';
+                count.textContent = 'Đang tải số lượt...';
+                card.querySelector('.apk-info').appendChild(count);
+                bindDownloadButton(button, key, url.href, file, count);
+
+                entries.push({ key, url: url.href, file, card, count });
             });
 
             fetch(API)
@@ -549,13 +575,36 @@
                     return response.json();
                 })
                 .then((data) => {
-                    for (const [key, count] of cards) {
-                        count.textContent = numberFormat.format(Number(data.counts?.[key]) || 0) + ' lượt tải';
+                    for (const entry of entries) {
+                        entry.count.textContent = numberFormat.format(Number(data.counts?.[entry.key]) || 0) + ' lượt tải';
+                        entry.downloadCount = Number(data.counts?.[entry.key]) || 0;
                     }
+                    buildHotSection();
                 })
                 .catch(() => {
-                    for (const count of cards.values()) count.textContent = 'Chưa có dữ liệu lượt tải';
+                    for (const entry of entries) entry.count.textContent = 'Chưa có dữ liệu lượt tải';
                 });
+
+            function buildHotSection() {
+                const hotEntries = entries
+                    .filter((entry) => entry.downloadCount > 0)
+                    .sort((a, b) => b.downloadCount - a.downloadCount)
+                    .slice(0, HOT_COUNT);
+
+                if (hotEntries.length === 0) return;
+
+                const hotGrid = document.getElementById('hot-grid');
+                hotEntries.forEach((entry) => {
+                    const clone = entry.card.cloneNode(true);
+                    const cloneButton = clone.querySelector('.btn-download');
+                    const cloneCount = clone.querySelector('.download-count');
+                    bindDownloadButton(cloneButton, entry.key, entry.url, entry.file, cloneCount);
+                    hotGrid.appendChild(clone);
+                });
+
+                document.getElementById('cat-hot').style.display = '';
+                document.getElementById('nav-hot').style.display = '';
+            }
         })();
     </script>
 
