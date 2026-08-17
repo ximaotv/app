@@ -22,7 +22,7 @@
         }
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             padding-bottom: 10px;
             border-bottom: 3px solid var(--primary-color);
             width: 100%;
@@ -41,11 +41,57 @@
             font-size: 14px;
         }
 
+        /* --- THANH DANH MỤC --- */
+        .category-nav {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            position: sticky;
+            top: 0;
+            background-color: var(--bg-color);
+            padding: 12px 0;
+            z-index: 10;
+        }
+        .nav-pill {
+            display: inline-block;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .nav-pill:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: #fff;
+        }
+
+        .category-section {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 36px;
+            scroll-margin-top: 70px;
+        }
+        .category-title {
+            font-size: 20px;
+            color: var(--primary-color);
+            border-left: 5px solid var(--primary-color);
+            padding-left: 12px;
+            margin: 0 0 16px 0;
+        }
+
         /* --- CẤU HÌNH GRID CHIA 2 CỘT --- */
         .grid-container {
             width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
@@ -71,6 +117,18 @@
             overflow: hidden;
             margin-bottom: 12px;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .app-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            object-fit: cover;
+            margin-bottom: 8px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+            background: #f2f2f2;
         }
         .title-app {
             display: block;
@@ -81,6 +139,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             text-align: center;
+            max-width: 100%;
         }
         .btn-download {
             display: block;
@@ -112,9 +171,13 @@
         }
 
         /* --- CẤU HÌNH CHO MOBILE --- */
-        @media (max-width: 580px) { 
-            .grid-container { 
+        @media (max-width: 580px) {
+            .grid-container {
                 grid-template-columns: repeat(1, 1fr);
+            }
+            .nav-pill {
+                font-size: 13px;
+                padding: 7px 12px;
             }
         }
     </style>
@@ -127,233 +190,300 @@
         <p>Việt Xiaomi - 0343.22.08.93</p>
     </div>
 
-    <div class="grid-container">
-        
-		<div class="apk-card app-ytb">
-            <div class="apk-info">
-                <span class="title-app">YouTube cho TV Nội Địa</span>
-            </div>
-            <a href="ytb.apk" class="btn-download" download>Tải Về</a>
-        </div>
+    <nav class="category-nav">
+            <a href="#cat-phim" class="nav-pill">🎬 Xem Phim</a>
+            <a href="#cat-tv" class="nav-pill">📡 Truyền Hình / IPTV</a>
+            <a href="#cat-youtube" class="nav-pill">▶️ YouTube</a>
+            <a href="#cat-dieukhien" class="nav-pill">🎙️ Điều Khiển / Trợ Lý Giọng Nói</a>
+            <a href="#cat-camera" class="nav-pill">📷 Camera An Ninh</a>
+            <a href="#cat-khac" class="nav-pill">🧰 Ứng Dụng Khác</a>
+    </nav>
 
-        <div class="apk-card app-googletv-ytb">
-            <div class="apk-info">
-                <span class="title-app">YouTube Tizen cho TV Quốc tế và Box</span>
+    <section class="category-section" id="cat-phim">
+        <h2 class="category-title">🎬 Xem Phim</h2>
+        <div class="grid-container">
+            <div class="apk-card app-chophim">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-chophim.png" alt="" loading="lazy">
+                    <span class="title-app">Chợ Phim</span>
+                </div>
+                <a href="chophim.apk" class="btn-download" download>Tải Về</a>
             </div>
-            <a href="ytb2.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-        <div class="apk-card app-vietmitv">
-            <div class="apk-info">
-                <span class="title-app">VietMITV cho GGTV</span>
-            </div>
-            <a href="vietmitv.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-quantv">
-            <div class="apk-info">
-                <span class="title-app">QuanTV</span>
-            </div>
-            <a href="quantv.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-vietplaytv">
-            <div class="apk-info">
-                <span class="title-app">VietPlayTV</span>
-            </div>
-            <a href="vietplaytv.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-vapptv">
-            <div class="apk-info">
-                <span class="title-app">VAppTV</span>
-            </div>
-            <a href="vapp.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-phim4k">
-            <div class="apk-info">
-                <span class="title-app">Phim4K</span>
-            </div>
-            <a href="phim4k.apk" class="btn-download" download>Tải Về</a>
-        </div>
-				
-		<div class="apk-card app-chophim">
-            <div class="apk-info">
-                <span class="title-app">Chợ Phim</span>
-            </div>
-            <a href="chophim.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-NVC">
-            <div class="apk-info">
-                <span class="title-app">NVC Phim</span>
-            </div>
-            <a href="NVC.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-saigonphim">
-            <div class="apk-info">
-                <span class="title-app">Sài Gòn Phim</span>
-            </div>
-            <a href="sgphim.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-rapphim">
-            <div class="apk-info">
-                <span class="title-app">Rạp Phim</span>
-            </div>
-            <a href="rapphim.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-vuagiaitri">
-            <div class="apk-info">
-                <span class="title-app">Vua Giải Trí</span>
-            </div>
-            <a href="vgt.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-co-tv">
-            <div class="apk-info">
-                <span class="title-app">Cò TV</span>
-            </div>
-            <a href="cotv.apk" class="btn-download" download>Tải Về</a>
-        </div>
 
-        <div class="apk-card app-get-out">
-            <div class="apk-info">
-                <span class="title-app">Get Out</span>
+            <div class="apk-card app-NVC">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-NVC.png" alt="" loading="lazy">
+                    <span class="title-app">NVC Phim</span>
+                </div>
+                <a href="NVC.apk" class="btn-download" download>Tải Về</a>
             </div>
-            <a href="getout.apk" class="btn-download" download>Tải Về</a>
-        </div>
 
-        <div class="apk-card app-tiktok-lite">
-            <div class="apk-info">
-                <span class="title-app">TikTok Lite</span>
+            <div class="apk-card app-saigonphim">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-saigonphim.png" alt="" loading="lazy">
+                    <span class="title-app">Sài Gòn Phim</span>
+                </div>
+                <a href="sgphim.apk" class="btn-download" download>Tải Về</a>
             </div>
-            <a href="tiktok.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-netflix">
-            <div class="apk-info">
-                <span class="title-app">Netflix dùng chuột</span>
-            </div>
-            <a href="netflix.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-mapvoice">
-            <div class="apk-info">
-                <span class="title-app">MapVoice</span>
-            </div>
-            <a href="mapvoice.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-supervoice">
-            <div class="apk-info">
-                <span class="title-app">Super Voice</span>
-            </div>
-            <a href="supervoice.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-kiki">
-            <div class="apk-info">
-                <span class="title-app">Giọng nói Kiki</span>
-            </div>
-            <a href="kiki.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-mcu">
-            <div class="apk-info">
-                <span class="title-app">MCU Store</span>
-            </div>
-            <a href="mcu.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-mstore2">
-            <div class="apk-info">
-                <span class="title-app">MStore2</span>
-            </div>
-            <a href="mstore.apk" class="btn-download" download>Tải Về</a>
-        </div>
 
-        <div class="apk-card app-remote-adb">
-            <div class="apk-info">
-                <span class="title-app">Remote ADB</span>
+            <div class="apk-card app-rapphim">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-rapphim.png" alt="" loading="lazy">
+                    <span class="title-app">Rạp Phim</span>
+                </div>
+                <a href="rapphim.apk" class="btn-download" download>Tải Về</a>
             </div>
-            <a href="adb.apk" class="btn-download" download>Tải Về</a>
-        </div>
 
-		<div class="apk-card app-fpt">
-            <div class="apk-info">
-                <span class="title-app">FPT Play</span>
+            <div class="apk-card app-phim4k">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-phim4k.png" alt="" loading="lazy">
+                    <span class="title-app">Phim4K</span>
+                </div>
+                <a href="phim4k.apk" class="btn-download" download>Tải Về</a>
             </div>
-            <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/fpt.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-hbomax">
-            <div class="apk-info">
-                <span class="title-app">HBO Max</span>
-            </div>
-            <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/hbomax.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-imou">
-            <div class="apk-info">
-                <span class="title-app">Imou</span>
-            </div>
-            <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/imou.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-mytv">
-            <div class="apk-info">
-                <span class="title-app">MyTV</span>
-            </div>
-            <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/mytv.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-notube">
-            <div class="apk-info">
-                <span class="title-app">NoTube</span>
-            </div>
-            <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/notube.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-tv360">
-            <div class="apk-info">
-                <span class="title-app">TV360</span>
-            </div>
-            <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/tv360.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-tvbro">
-            <div class="apk-info">
-                <span class="title-app">TV Bro</span>
-            </div>
-            <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/tvbro.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-vtvgo">
-            <div class="apk-info">
-                <span class="title-app">VTVgo</span>
-            </div>
-            <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/vtvgo.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-vtvprime">
-            <div class="apk-info">
-                <span class="title-app">VTV Prime</span>
-            </div>
-            <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/vtvprime.apk" class="btn-download" download>Tải Về</a>
-        </div>
-		
-		<div class="apk-card app-yoosee">
-            <div class="apk-info">
-                <span class="title-app">Yoosee</span>
-            </div>
-            <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/yoosee.apk" class="btn-download" download>Tải Về</a>
-        </div>
 
-    </div>
+            <div class="apk-card app-vuagiaitri">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-vuagiaitri.png" alt="" loading="lazy">
+                    <span class="title-app">Vua Giải Trí</span>
+                </div>
+                <a href="vgt.apk" class="btn-download" download>Tải Về</a>
+            </div>
+
+            <div class="apk-card app-netflix">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-netflix.png" alt="" loading="lazy">
+                    <span class="title-app">Netflix dùng chuột</span>
+                </div>
+                <a href="netflix.apk" class="btn-download" download>Tải Về</a>
+            </div>
+
+            <div class="apk-card app-hbomax">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-hbomax.png" alt="" loading="lazy">
+                    <span class="title-app">HBO Max</span>
+                </div>
+                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/hbomax.apk" class="btn-download" download>Tải Về</a>
+            </div>
+
+            <div class="apk-card app-fpt">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-fpt.png" alt="" loading="lazy">
+                    <span class="title-app">FPT Play</span>
+                </div>
+                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/fpt.apk" class="btn-download" download>Tải Về</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="cat-tv">
+        <h2 class="category-title">📡 Truyền Hình / IPTV</h2>
+        <div class="grid-container">
+            <div class="apk-card app-quantv">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-quantv.png" alt="" loading="lazy">
+                    <span class="title-app">QuanTV</span>
+                </div>
+                <a href="quantv.apk" class="btn-download" download>Tải Về</a>
+            </div>
+
+            <div class="apk-card app-vietplaytv">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-vietplaytv.png" alt="" loading="lazy">
+                    <span class="title-app">VietPlayTV</span>
+                </div>
+                <a href="vietplaytv.apk" class="btn-download" download>Tải Về</a>
+            </div>
+
+            <div class="apk-card app-vapptv">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-vapptv.png" alt="" loading="lazy">
+                    <span class="title-app">VAppTV</span>
+                </div>
+                <a href="vapp.apk" class="btn-download" download>Tải Về</a>
+            </div>
+
+            <div class="apk-card app-co-tv">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-co-tv.png" alt="" loading="lazy">
+                    <span class="title-app">Cò TV</span>
+                </div>
+                <a href="cotv.apk" class="btn-download" download>Tải Về</a>
+            </div>
+
+            <div class="apk-card app-tv360">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-tv360.png" alt="" loading="lazy">
+                    <span class="title-app">TV360</span>
+                </div>
+                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/tv360.apk" class="btn-download" download>Tải Về</a>
+            </div>
+
+            <div class="apk-card app-vtvgo">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-vtvgo.png" alt="" loading="lazy">
+                    <span class="title-app">VTVgo</span>
+                </div>
+                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/vtvgo.apk" class="btn-download" download>Tải Về</a>
+            </div>
+
+            <div class="apk-card app-vtvprime">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-vtvprime.png" alt="" loading="lazy">
+                    <span class="title-app">VTV Prime</span>
+                </div>
+                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/vtvprime.apk" class="btn-download" download>Tải Về</a>
+            </div>
+
+            <div class="apk-card app-mytv">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-mytv.png" alt="" loading="lazy">
+                    <span class="title-app">MyTV</span>
+                </div>
+                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/mytv.apk" class="btn-download" download>Tải Về</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="cat-youtube">
+        <h2 class="category-title">▶️ YouTube</h2>
+        <div class="grid-container">
+            <div class="apk-card app-ytb">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-ytb.png" alt="" loading="lazy">
+                    <span class="title-app">YouTube cho TV Nội Địa</span>
+                </div>
+                <a href="ytb.apk" class="btn-download" download>Tải Về</a>
+            </div>
+
+            <div class="apk-card app-googletv-ytb">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-googletv-ytb.png" alt="" loading="lazy">
+                    <span class="title-app">YouTube Tizen cho TV Quốc tế và Box</span>
+                </div>
+                <a href="ytb2.apk" class="btn-download" download>Tải Về</a>
+            </div>
+
+            <div class="apk-card app-notube">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-notube.png" alt="" loading="lazy">
+                    <span class="title-app">NoTube</span>
+                </div>
+                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/notube.apk" class="btn-download" download>Tải Về</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="cat-dieukhien">
+        <h2 class="category-title">🎙️ Điều Khiển / Trợ Lý Giọng Nói</h2>
+        <div class="grid-container">
+            <div class="apk-card app-vietmitv">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-vietmitv.png" alt="" loading="lazy">
+                    <span class="title-app">VietMITV cho GGTV</span>
+                </div>
+                <a href="vietmitv.apk" class="btn-download" download>Tải Về</a>
+            </div>
+
+            <div class="apk-card app-mapvoice">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-mapvoice.png" alt="" loading="lazy">
+                    <span class="title-app">MapVoice</span>
+                </div>
+                <a href="mapvoice.apk" class="btn-download" download>Tải Về</a>
+            </div>
+
+            <div class="apk-card app-supervoice">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-supervoice.png" alt="" loading="lazy">
+                    <span class="title-app">Super Voice</span>
+                </div>
+                <a href="supervoice.apk" class="btn-download" download>Tải Về</a>
+            </div>
+
+            <div class="apk-card app-kiki">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-kiki.png" alt="" loading="lazy">
+                    <span class="title-app">Giọng nói Kiki</span>
+                </div>
+                <a href="kiki.apk" class="btn-download" download>Tải Về</a>
+            </div>
+
+            <div class="apk-card app-remote-adb">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-remote-adb.png" alt="" loading="lazy">
+                    <span class="title-app">Remote ADB</span>
+                </div>
+                <a href="adb.apk" class="btn-download" download>Tải Về</a>
+            </div>
+
+            <div class="apk-card app-tvbro">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-tvbro.png" alt="" loading="lazy">
+                    <span class="title-app">TV Bro</span>
+                </div>
+                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/tvbro.apk" class="btn-download" download>Tải Về</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="cat-camera">
+        <h2 class="category-title">📷 Camera An Ninh</h2>
+        <div class="grid-container">
+            <div class="apk-card app-imou">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-imou.png" alt="" loading="lazy">
+                    <span class="title-app">Imou</span>
+                </div>
+                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/imou.apk" class="btn-download" download>Tải Về</a>
+            </div>
+
+            <div class="apk-card app-yoosee">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-yoosee.png" alt="" loading="lazy">
+                    <span class="title-app">Yoosee</span>
+                </div>
+                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/yoosee.apk" class="btn-download" download>Tải Về</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="cat-khac">
+        <h2 class="category-title">🧰 Ứng Dụng Khác</h2>
+        <div class="grid-container">
+            <div class="apk-card app-mcu">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-mcu.png" alt="" loading="lazy">
+                    <span class="title-app">MCU Store</span>
+                </div>
+                <a href="mcu.apk" class="btn-download" download>Tải Về</a>
+            </div>
+
+            <div class="apk-card app-mstore2">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-mstore2.png" alt="" loading="lazy">
+                    <span class="title-app">MStore2</span>
+                </div>
+                <a href="mstore.apk" class="btn-download" download>Tải Về</a>
+            </div>
+
+            <div class="apk-card app-tiktok-lite">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-tiktok-lite.png" alt="" loading="lazy">
+                    <span class="title-app">TikTok Lite</span>
+                </div>
+                <a href="tiktok.apk" class="btn-download" download>Tải Về</a>
+            </div>
+
+            <div class="apk-card app-get-out">
+                <div class="apk-info">
+                    <img class="app-icon" src="icons/app-get-out.png" alt="" loading="lazy">
+                    <span class="title-app">Get Out</span>
+                </div>
+                <a href="getout.apk" class="btn-download" download>Tải Về</a>
+            </div>
+        </div>
+    </section>
 
     <script>
         (() => {
