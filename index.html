@@ -506,98 +506,120 @@
     </section>
 
     <script>
-        (() => {
-            const API = 'https://viet-xiaomi-tv-download.viet-ng228.workers.dev/app-downloads';
-            const DEDUPE_TIME = 30 * 60 * 1000;
-            const HOT_COUNT = 8;
-            const numberFormat = new Intl.NumberFormat('vi-VN');
-            const visitorKey = 'ximaotv-download-visitor';
-            let visitorId = localStorage.getItem(visitorKey);
+        (function () {
+            var API = 'https://viet-xiaomi-tv-download.viet-ng228.workers.dev/app-downloads';
+            var DEDUPE_TIME = 30 * 60 * 1000;
+            var HOT_COUNT = 8;
+            var numberFormat = new Intl.NumberFormat('vi-VN');
+            var visitorKey = 'ximaotv-download-visitor';
+            var visitorId = localStorage.getItem(visitorKey);
 
             if (!visitorId) {
-                visitorId = crypto.randomUUID();
+                visitorId = generateUUID();
                 localStorage.setItem(visitorKey, visitorId);
             }
 
+            function generateUUID() {
+                if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+                    try { return window.crypto.randomUUID(); } catch (e) {}
+                }
+                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                    var r = Math.random() * 16 | 0;
+                    var v = c === 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+            }
+
             function bindDownloadButton(button, key, url, file, countEl) {
-                button.addEventListener('click', async (event) => {
-                    const storageKey = 'ximaotv-download:' + key;
-                    const lastCounted = Number(localStorage.getItem(storageKey) || 0);
+                button.addEventListener('click', function (event) {
+                    var storageKey = 'ximaotv-download:' + key;
+                    var lastCounted = Number(localStorage.getItem(storageKey) || 0);
                     if (Date.now() - lastCounted < DEDUPE_TIME) return;
 
                     event.preventDefault();
                     if (button.dataset.counting === '1') return;
                     button.dataset.counting = '1';
 
-                    try {
-                        const response = await fetch(API + '/' + key, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ visitorId })
-                        });
-                        if (!response.ok) throw new Error('Counter unavailable');
-                        const data = await response.json();
-                        countEl.textContent = numberFormat.format(Number(data.count) || 0) + ' lượt tải';
-                        localStorage.setItem(storageKey, String(Date.now()));
-                    } catch {
-                        localStorage.removeItem(storageKey);
-                    } finally {
+                    function triggerDownload() {
                         button.dataset.counting = '0';
-                        const download = document.createElement('a');
+                        var download = document.createElement('a');
                         download.href = url;
                         download.download = file;
                         document.body.appendChild(download);
                         download.click();
                         download.remove();
                     }
+
+                    fetch(API + '/' + key, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ visitorId: visitorId })
+                    }).then(function (response) {
+                        if (!response.ok) throw new Error('Counter unavailable');
+                        return response.json();
+                    }).then(function (data) {
+                        var c = (data && typeof data.count !== 'undefined') ? Number(data.count) : 0;
+                        countEl.textContent = numberFormat.format(c || 0) + ' lượt tải';
+                        localStorage.setItem(storageKey, String(Date.now()));
+                        triggerDownload();
+                    }).catch(function () {
+                        localStorage.removeItem(storageKey);
+                        triggerDownload();
+                    });
                 });
             }
 
-            const entries = [];
-            document.querySelectorAll('.category-section:not(.hot-section) .apk-card').forEach((card) => {
-                const button = card.querySelector('.btn-download');
-                const url = new URL(button.href, location.href);
-                const file = decodeURIComponent(url.pathname.split('/').pop());
-                const key = file.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-                const count = document.createElement('span');
+            var entries = [];
+            var cards = document.querySelectorAll('.category-section:not(.hot-section) .apk-card');
+            for (var i = 0; i < cards.length; i++) {
+                (function (card) {
+                    var button = card.querySelector('.btn-download');
+                    var url = new URL(button.href, location.href);
+                    var file = decodeURIComponent(url.pathname.split('/').pop());
+                    var key = file.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                    var count = document.createElement('span');
 
-                count.className = 'download-count';
-                count.textContent = 'Đang tải số lượt...';
-                card.querySelector('.apk-info').appendChild(count);
-                bindDownloadButton(button, key, url.href, file, count);
+                    count.className = 'download-count';
+                    count.textContent = 'Đang tải số lượt...';
+                    card.querySelector('.apk-info').appendChild(count);
+                    bindDownloadButton(button, key, url.href, file, count);
 
-                entries.push({ key, url: url.href, file, card, count });
-            });
+                    entries.push({ key: key, url: url.href, file: file, card: card, count: count });
+                })(cards[i]);
+            }
 
             fetch(API)
-                .then((response) => {
+                .then(function (response) {
                     if (!response.ok) throw new Error('Counter unavailable');
                     return response.json();
                 })
-                .then((data) => {
-                    for (const entry of entries) {
-                        entry.count.textContent = numberFormat.format(Number(data.counts?.[entry.key]) || 0) + ' lượt tải';
-                        entry.downloadCount = Number(data.counts?.[entry.key]) || 0;
+                .then(function (data) {
+                    var counts = (data && data.counts) ? data.counts : {};
+                    for (var i = 0; i < entries.length; i++) {
+                        var entry = entries[i];
+                        var c = counts[entry.key] ? Number(counts[entry.key]) : 0;
+                        entry.count.textContent = numberFormat.format(c || 0) + ' lượt tải';
+                        entry.downloadCount = c || 0;
                     }
                     buildHotSection();
                 })
-                .catch(() => {
-                    for (const entry of entries) entry.count.textContent = 'Chưa có dữ liệu lượt tải';
+                .catch(function () {
+                    for (var i = 0; i < entries.length; i++) entries[i].count.textContent = 'Chưa có dữ liệu lượt tải';
                 });
 
             function buildHotSection() {
-                const hotEntries = entries
-                    .filter((entry) => entry.downloadCount > 0)
-                    .sort((a, b) => b.downloadCount - a.downloadCount)
+                var hotEntries = entries
+                    .filter(function (entry) { return entry.downloadCount > 0; })
+                    .sort(function (a, b) { return b.downloadCount - a.downloadCount; })
                     .slice(0, HOT_COUNT);
 
                 if (hotEntries.length === 0) return;
 
-                const hotGrid = document.getElementById('hot-grid');
-                hotEntries.forEach((entry) => {
-                    const clone = entry.card.cloneNode(true);
-                    const cloneButton = clone.querySelector('.btn-download');
-                    const cloneCount = clone.querySelector('.download-count');
+                var hotGrid = document.getElementById('hot-grid');
+                hotEntries.forEach(function (entry) {
+                    var clone = entry.card.cloneNode(true);
+                    var cloneButton = clone.querySelector('.btn-download');
+                    var cloneCount = clone.querySelector('.download-count');
                     bindDownloadButton(cloneButton, entry.key, entry.url, entry.file, cloneCount);
                     hotGrid.appendChild(clone);
                 });
