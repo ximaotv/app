@@ -561,9 +561,7 @@
                 button.addEventListener('click', function (event) {
                     event.preventDefault();
 
-                    // Luôn tải file ngay lập tức, không chờ API đếm lượt tải xong -
-                    // tránh trường hợp thiết bị/mạng kết nối tới API đếm bị chậm hoặc bị chặn
-                    // khiến nút "Tải Về" bị treo ở trạng thái "đang kết nối" mà không tải được.
+
                     var download = document.createElement('a');
                     download.href = url;
                     download.download = file;
@@ -587,7 +585,7 @@
                         countEl.textContent = numberFormat.format(c || 0) + ' lượt tải';
                         localStorage.setItem(storageKey, String(Date.now()));
                     }).catch(function () {
-                        // Đếm lượt tải thất bại (mạng chậm hoặc bị chặn) - bỏ qua, file đã tải xong rồi.
+
                     });
                 });
             }
