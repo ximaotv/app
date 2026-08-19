@@ -517,6 +517,7 @@
         (function () {
             var API = 'https://viet-xiaomi-tv-download.viet-ng228.workers.dev/app-downloads';
             var DEDUPE_TIME = 30 * 60 * 1000;
+            var REQUEST_TIMEOUT = 6000;
             var HOT_COUNT = 8;
             var numberFormat = new Intl.NumberFormat('vi-VN');
             var visitorKey = 'ximaotv-download-visitor';
@@ -538,41 +539,55 @@
                 });
             }
 
+            function fetchWithTimeout(url, options, timeout) {
+                if (typeof AbortController === 'undefined') {
+                    return fetch(url, options);
+                }
+                var controller = new AbortController();
+                var timer = setTimeout(function () { controller.abort(); }, timeout);
+                var opts = {};
+                for (var k in options) { if (options.hasOwnProperty(k)) opts[k] = options[k]; }
+                opts.signal = controller.signal;
+                return fetch(url, opts).then(function (response) {
+                    clearTimeout(timer);
+                    return response;
+                }, function (error) {
+                    clearTimeout(timer);
+                    throw error;
+                });
+            }
+
             function bindDownloadButton(button, key, url, file, countEl) {
                 button.addEventListener('click', function (event) {
+                    event.preventDefault();
+
+                    // Luôn tải file ngay lập tức, không chờ API đếm lượt tải xong -
+                    // tránh trường hợp thiết bị/mạng kết nối tới API đếm bị chậm hoặc bị chặn
+                    // khiến nút "Tải Về" bị treo ở trạng thái "đang kết nối" mà không tải được.
+                    var download = document.createElement('a');
+                    download.href = url;
+                    download.download = file;
+                    document.body.appendChild(download);
+                    download.click();
+                    download.remove();
+
                     var storageKey = 'ximaotv-download:' + key;
                     var lastCounted = Number(localStorage.getItem(storageKey) || 0);
                     if (Date.now() - lastCounted < DEDUPE_TIME) return;
 
-                    event.preventDefault();
-                    if (button.dataset.counting === '1') return;
-                    button.dataset.counting = '1';
-
-                    function triggerDownload() {
-                        button.dataset.counting = '0';
-                        var download = document.createElement('a');
-                        download.href = url;
-                        download.download = file;
-                        document.body.appendChild(download);
-                        download.click();
-                        download.remove();
-                    }
-
-                    fetch(API + '/' + key, {
+                    fetchWithTimeout(API + '/' + key, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ visitorId: visitorId })
-                    }).then(function (response) {
+                    }, REQUEST_TIMEOUT).then(function (response) {
                         if (!response.ok) throw new Error('Counter unavailable');
                         return response.json();
                     }).then(function (data) {
                         var c = (data && typeof data.count !== 'undefined') ? Number(data.count) : 0;
                         countEl.textContent = numberFormat.format(c || 0) + ' lượt tải';
                         localStorage.setItem(storageKey, String(Date.now()));
-                        triggerDownload();
                     }).catch(function () {
-                        localStorage.removeItem(storageKey);
-                        triggerDownload();
+                        // Đếm lượt tải thất bại (mạng chậm hoặc bị chặn) - bỏ qua, file đã tải xong rồi.
                     });
                 });
             }
@@ -596,7 +611,7 @@
                 })(cards[i]);
             }
 
-            fetch(API)
+            fetchWithTimeout(API, {}, REQUEST_TIMEOUT)
                 .then(function (response) {
                     if (!response.ok) throw new Error('Counter unavailable');
                     return response.json();
