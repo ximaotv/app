@@ -34,7 +34,7 @@
     {"name":"Yoosee Camera","version":"","description":"Ứng dụng xem camera Yoosee trên TV","category":"Camera An Ninh","packageName":"","icon":"icons/app-yoosee.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/yoosee.apk","downloadKey":"yoosee-apk"},
     {"name":"EZVIZ Camera","version":"","description":"Ứng dụng xem camera EZVIZ trên TV","category":"Camera An Ninh","packageName":"","icon":"icons/app-ezviz.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/ezviz.apk","downloadKey":"ezviz-apk"},
 
-    {"name":"MCU Store","version":"","description":"Kho ứng dụng dành cho Android TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-mcu.png","apk":"mcu.apk","downloadKey":"mcu-apk"},
+    {"name":"Việt Xiaomi Store","version":"","description":"Kho ứng dụng dành cho Android TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-vxm.png","apk":"vxmstore.apk","downloadKey":"vxmstore-apk"},
     {"name":"MStore2","version":"","description":"Kho ứng dụng dành cho Android TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-mstore2.png","apk":"mstore.apk","downloadKey":"mstore-apk"},
     {"name":"Trình duyệt TV Bro","version":"","description":"Trình duyệt web tối ưu cho Android TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-tvbro.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/tvbro.apk","downloadKey":"tvbro-apk"},
     {"name":"Trình duyệt Cốc Cốc TV","version":"","description":"Trình duyệt Cốc Cốc dành cho TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-coccoc.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/coccoc.apk","downloadKey":"coccoc-apk"},
