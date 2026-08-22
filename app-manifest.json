@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "store": {"name":"Việt Xiaomi Store","supportPhone":"0343.22.08.93","baseUrl":"https://ximaotv.github.io/app/"},
+  "apps": [
+    {"name":"YouTube XiaomiTV Nội Địa","version":"","description":"YouTube dành cho Xiaomi TV nội địa","category":"YouTube","packageName":"","icon":"icons/app-ytb.png","apk":"ytb.apk","downloadKey":"ytb-apk"},
+    {"name":"Tizen Tube GoogleTV","version":"","description":"Ứng dụng xem YouTube dành cho Google TV","category":"YouTube","packageName":"","icon":"icons/app-googletv-ytb.png","apk":"ytb2.apk","downloadKey":"ytb2-apk"},
+    {"name":"SmartTube Stable","version":"","description":"Ứng dụng xem YouTube tối ưu cho Android TV","category":"YouTube","packageName":"","icon":"icons/app-smarttube.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/smarttube.apk","downloadKey":"smarttube-apk"},
+    {"name":"TikTok AndroidTV","version":"","description":"TikTok dành cho Android TV","category":"YouTube","packageName":"","icon":"icons/app-tiktok-lite.png","apk":"tiktok.apk","downloadKey":"tiktok-apk"},
+
+    {"name":"Phim4K","version":"","description":"Ứng dụng xem phim trên TV","category":"Xem Phim","packageName":"","icon":"icons/app-phim4k.png","apk":"phim4k.apk","downloadKey":"phim4k-apk"},
+    {"name":"Chợ Phim","version":"","description":"Ứng dụng xem phim trên TV","category":"Xem Phim","packageName":"","icon":"icons/app-chophim.png","apk":"chophim.apk","downloadKey":"chophim-apk"},
+    {"name":"NVC Phim","version":"","description":"Ứng dụng xem phim trên TV","category":"Xem Phim","packageName":"","icon":"icons/app-NVC.png","apk":"NVC.apk","downloadKey":"nvc-apk"},
+    {"name":"Sài Gòn Phim","version":"","description":"Ứng dụng xem phim trên TV","category":"Xem Phim","packageName":"","icon":"icons/app-saigonphim.png","apk":"sgphim.apk","downloadKey":"sgphim-apk"},
+    {"name":"Rạp Phim","version":"","description":"Ứng dụng xem phim trên TV","category":"Xem Phim","packageName":"","icon":"icons/app-rapphim.png","apk":"rapphim.apk","downloadKey":"rapphim-apk"},
+    {"name":"Netflix","version":"","description":"Netflix bản yêu cầu sử dụng chuột","category":"Xem Phim","packageName":"","icon":"icons/app-netflix.png","apk":"netflix.apk","downloadKey":"netflix-apk"},
+    {"name":"HBO Max","version":"","description":"Ứng dụng xem phim HBO Max","category":"Xem Phim","packageName":"","icon":"icons/app-hbomax.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/hbomax.apk","downloadKey":"hbomax-apk"},
+
+    {"name":"VietMITV","version":"","description":"Ứng dụng truyền hình dành cho TV","category":"Truyền Hình","packageName":"","icon":"icons/app-vietmitv.png","apk":"vietmitv.apk","downloadKey":"vietmitv-apk"},
+    {"name":"QuanTV","version":"","description":"Ứng dụng truyền hình dành cho TV","category":"Truyền Hình","packageName":"","icon":"icons/app-quantv.png","apk":"quantv.apk","downloadKey":"quantv-apk"},
+    {"name":"VietPlayTV","version":"","description":"Ứng dụng truyền hình dành cho TV","category":"Truyền Hình","packageName":"","icon":"icons/app-vietplaytv.png","apk":"vietplaytv.apk","downloadKey":"vietplaytv-apk"},
+    {"name":"VAppTV","version":"","description":"Ứng dụng truyền hình dành cho TV","category":"Truyền Hình","packageName":"","icon":"icons/app-vapptv.png","apk":"vapp.apk","downloadKey":"vapp-apk"},
+    {"name":"FPT Play","version":"","description":"Ứng dụng truyền hình FPT Play","category":"Truyền Hình","packageName":"","icon":"icons/app-fptplay.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/fptplay.apk","downloadKey":"fptplay-apk"},
+    {"name":"TV360","version":"","description":"Ứng dụng truyền hình TV360","category":"Truyền Hình","packageName":"","icon":"icons/app-tv360.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/tv360.apk","downloadKey":"tv360-apk"},
+    {"name":"VTV Go","version":"","description":"Ứng dụng xem truyền hình VTV","category":"Truyền Hình","packageName":"","icon":"icons/app-vtvgo.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/vtvgo.apk","downloadKey":"vtvgo-apk"},
+    {"name":"VTV Prime","version":"","description":"Ứng dụng xem truyền hình VTV Prime","category":"Truyền Hình","packageName":"","icon":"icons/app-vtvprime.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/vtvprime.apk","downloadKey":"vtvprime-apk"},
+    {"name":"MyTV","version":"","description":"Ứng dụng truyền hình MyTV","category":"Truyền Hình","packageName":"","icon":"icons/app-mytv.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/mytv.apk","downloadKey":"mytv-apk"},
+    {"name":"Get Out","version":"","description":"Ứng dụng dành cho Android TV","category":"Truyền Hình","packageName":"","icon":"icons/app-get-out.png","apk":"getout.apk","downloadKey":"getout-apk"},
+
+    {"name":"MapVoice","version":"","description":"Công cụ hỗ trợ điều khiển giọng nói","category":"Trợ Lý Giọng Nói","packageName":"","icon":"icons/app-mapvoice.png","apk":"mapvoice.apk","downloadKey":"mapvoice-apk"},
+    {"name":"Super Voice","version":"","description":"Công cụ hỗ trợ điều khiển giọng nói","category":"Trợ Lý Giọng Nói","packageName":"","icon":"icons/app-supervoice.png","apk":"supervoice.apk","downloadKey":"supervoice-apk"},
+    {"name":"Giọng nói Kiki","version":"","description":"Trợ lý giọng nói Kiki dành cho TV","category":"Trợ Lý Giọng Nói","packageName":"","icon":"icons/app-kiki.png","apk":"kiki.apk","downloadKey":"kiki-apk"},
+
+    {"name":"Imou Camera","version":"","description":"Ứng dụng xem camera Imou trên TV","category":"Camera An Ninh","packageName":"","icon":"icons/app-imou.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/imou.apk","downloadKey":"imou-apk"},
+    {"name":"Yoosee Camera","version":"","description":"Ứng dụng xem camera Yoosee trên TV","category":"Camera An Ninh","packageName":"","icon":"icons/app-yoosee.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/yoosee.apk","downloadKey":"yoosee-apk"},
+    {"name":"EZVIZ Camera","version":"","description":"Ứng dụng xem camera EZVIZ trên TV","category":"Camera An Ninh","packageName":"","icon":"icons/app-ezviz.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/ezviz.apk","downloadKey":"ezviz-apk"},
+
+    {"name":"MCU Store","version":"","description":"Kho ứng dụng dành cho Android TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-mcu.png","apk":"mcu.apk","downloadKey":"mcu-apk"},
+    {"name":"MStore2","version":"","description":"Kho ứng dụng dành cho Android TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-mstore2.png","apk":"mstore.apk","downloadKey":"mstore-apk"},
+    {"name":"Trình duyệt TV Bro","version":"","description":"Trình duyệt web tối ưu cho Android TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-tvbro.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/tvbro.apk","downloadKey":"tvbro-apk"},
+    {"name":"Trình duyệt Cốc Cốc TV","version":"","description":"Trình duyệt Cốc Cốc dành cho TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-coccoc.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/coccoc.apk","downloadKey":"coccoc-apk"},
+    {"name":"Projectivy Launcher","version":"","description":"Launcher tùy biến dành cho Android TV","category":"Ứng Dụng Khác","packageName":"com.spocky.projengmenu","icon":"icons/app-project.png","apk":"project.apk","downloadKey":"project-apk"},
+    {"name":"Việt Xiaomi ADB Terminal","version":"","description":"Công cụ ADB terminal dành cho TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-adb.png","apk":"adb.apk","downloadKey":"adb-apk"}
+  ]
+}
