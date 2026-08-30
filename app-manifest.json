@@ -15,7 +15,7 @@
     {"name":"Netflix","version":"8.121.2 build 22 50727","description":"Netflix bản yêu cầu sử dụng chuột","category":"Xem Phim","packageName":"","icon":"icons/app-netflix.png","apk":"netflix.apk","downloadKey":"netflix-apk"},
     {"name":"HBO Max","version":"7.3.0.69","description":"Ứng dụng xem phim HBO Max","category":"Xem Phim","packageName":"","icon":"icons/app-hbomax.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/hbomax.apk","downloadKey":"hbomax-apk"},
 
-    {"name":"VietMITV","version":"v13","description":"Ứng dụng truyền hình dành cho TV","category":"Truyền Hình","packageName":"","icon":"icons/app-vietmitv.png","apk":"vietmitv.apk","downloadKey":"vietmitv-apk"},
+    {"name":"VietMITV","version":"v14","description":"Ứng dụng truyền hình dành cho TV","category":"Truyền Hình","packageName":"","icon":"icons/app-vietmitv.png","apk":"vietmitv.apk","downloadKey":"vietmitv-apk"},
 	{"name":"VietMITV Gán Phím","version":"v11","description":"Ứng dụng truyền hình dành cho TV","category":"Truyền Hình","packageName":"","icon":"icons/app-vietmitv.png","apk":"vietmitv99.apk","downloadKey":"vietmitv99-apk"},
     {"name":"QuanTV","version":"250921","description":"Ứng dụng truyền hình dành cho TV","category":"Truyền Hình","packageName":"","icon":"icons/app-quantv.png","apk":"quantv.apk","downloadKey":"quantv-apk"},
     {"name":"VietPlayTV","version":"2.4","description":"Ứng dụng truyền hình dành cho TV","category":"Truyền Hình","packageName":"","icon":"icons/app-vietplaytv.png","apk":"vietplaytv.apk","downloadKey":"vietplaytv-apk"},
