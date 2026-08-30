@@ -7,7 +7,7 @@
     {"name":"SmartTube Stable","version":"31","description":"Ứng dụng xem YouTube tối ưu cho Android TV","category":"YouTube","packageName":"","icon":"icons/app-smarttube.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/smarttube.apk","downloadKey":"smarttube-apk"},
     {"name":"TikTok AndroidTV","version":"","description":"TikTok dành cho Android TV","category":"YouTube","packageName":"","icon":"icons/app-tiktok-lite.png","apk":"tiktok.apk","downloadKey":"tiktok-apk"},
 
-    {"name":"Phim4K","version":"2.6.6","description":"Ứng dụng xem phim trên TV","category":"Xem Phim","packageName":"","icon":"icons/app-phim4k.png","apk":"phim4k.apk","downloadKey":"phim4k-apk"},
+    {"name":"Phim4K","version":"2.6.7","description":"Ứng dụng xem phim trên TV","category":"Xem Phim","packageName":"","icon":"icons/app-phim4k.png","apk":"phim4k.apk","downloadKey":"phim4k-apk"},
     {"name":"Chợ Phim","version":"","description":"Ứng dụng xem phim trên TV","category":"Xem Phim","packageName":"","icon":"icons/app-chophim.png","apk":"chophim.apk","downloadKey":"chophim-apk"},
     {"name":"NVC Phim","version":"","description":"Ứng dụng xem phim trên TV","category":"Xem Phim","packageName":"","icon":"icons/app-NVC.png","apk":"NVC.apk","downloadKey":"nvc-apk"},
     {"name":"Sài Gòn Phim","version":"","description":"Ứng dụng xem phim trên TV","category":"Xem Phim","packageName":"","icon":"icons/app-saigonphim.png","apk":"sgphim.apk","downloadKey":"sgphim-apk"},
