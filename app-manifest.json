@@ -37,6 +37,7 @@
 
     {"name":"Việt Xiaomi Store","version":"1.0","description":"Kho ứng dụng dành cho Android TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-vxm.png","apk":"vxmstore.apk","downloadKey":"vxmstore-apk"},
     {"name":"Dọn dẹp RAM","version":"1.2","description":"Ứng dụng dọn dẹp RAM cho GoogleTV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-task.png","apk":"taskmgr.apk","downloadKey":"taskmgr-apk"},
+	{"name":"MiX Silver","version":"","description":"Ứng dụng quản lý file cho Android TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-mix.png","apk":"mix.apk","downloadKey":"mix-apk"},
 	{"name":"MStore2","version":"","description":"Kho ứng dụng dành cho Android TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-mstore2.png","apk":"mstore.apk","downloadKey":"mstore-apk"},
     {"name":"Trình duyệt TV Bro","version":"","description":"Trình duyệt web tối ưu cho Android TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-tvbro.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/tvbro.apk","downloadKey":"tvbro-apk"},
     {"name":"Trình duyệt Cốc Cốc TV","version":"","description":"Trình duyệt Cốc Cốc dành cho TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-coccoc.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/coccoc.apk","downloadKey":"coccoc-apk"},
