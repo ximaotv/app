@@ -36,7 +36,8 @@
     {"name":"EZVIZ Camera","version":"","description":"Ứng dụng xem camera EZVIZ trên TV","category":"Camera An Ninh","packageName":"","icon":"icons/app-ezviz.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/ezviz.apk","downloadKey":"ezviz-apk"},
 
     {"name":"Việt Xiaomi Store","version":"1.0","description":"Kho ứng dụng dành cho Android TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-vxm.png","apk":"vxmstore.apk","downloadKey":"vxmstore-apk"},
-    {"name":"MStore2","version":"","description":"Kho ứng dụng dành cho Android TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-mstore2.png","apk":"mstore.apk","downloadKey":"mstore-apk"},
+    {"name":"Dọn dẹp RAM","version":"1.2","description":"Ứng dụng dọn dẹp RAM cho GoogleTV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-task.png","apk":"taskmgr.apk","downloadKey":"taskmgr-apk"},
+	{"name":"MStore2","version":"","description":"Kho ứng dụng dành cho Android TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-mstore2.png","apk":"mstore.apk","downloadKey":"mstore-apk"},
     {"name":"Trình duyệt TV Bro","version":"","description":"Trình duyệt web tối ưu cho Android TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-tvbro.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/tvbro.apk","downloadKey":"tvbro-apk"},
     {"name":"Trình duyệt Cốc Cốc TV","version":"","description":"Trình duyệt Cốc Cốc dành cho TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-coccoc.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/coccoc.apk","downloadKey":"coccoc-apk"},
     {"name":"Projectivy Launcher","version":"4.71","description":"Launcher tùy biến dành cho Android TV","category":"Ứng Dụng Khác","packageName":"com.spocky.projengmenu","icon":"icons/app-project.png","apk":"project.apk","downloadKey":"project-apk"},
