@@ -35,6 +35,7 @@
     {"name":"Imou Camera","version":"","description":"Ứng dụng xem camera Imou trên TV","category":"Camera An Ninh","packageName":"","icon":"icons/app-imou.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/imou.apk","downloadKey":"imou-apk"},
     {"name":"Yoosee Camera","version":"","description":"Ứng dụng xem camera Yoosee trên TV","category":"Camera An Ninh","packageName":"","icon":"icons/app-yoosee.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/yoosee.apk","downloadKey":"yoosee-apk"},
     {"name":"EZVIZ Camera","version":"","description":"Ứng dụng xem camera EZVIZ trên TV","category":"Camera An Ninh","packageName":"","icon":"icons/app-ezviz.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/ezviz.apk","downloadKey":"ezviz-apk"},
+	{"name":"HIK Camera","version":"","description":"Ứng dụng xem camera HIK trên TV","category":"Camera An Ninh","packageName":"","icon":"icons/app-hik.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/hik.apk","downloadKey":"hik-apk"},
 
     {"name":"Việt Xiaomi Store","version":"1.0","description":"Kho ứng dụng dành cho Android TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-vxm.png","apk":"vxmstore.apk","downloadKey":"vxmstore-apk"},
     {"name":"Dọn dẹp RAM","version":"1.2","description":"Ứng dụng dọn dẹp RAM cho GoogleTV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-task.png","apk":"taskmgr.apk","downloadKey":"taskmgr-apk"},
