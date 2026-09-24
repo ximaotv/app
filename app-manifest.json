@@ -26,7 +26,7 @@
     {"name":"VTV Prime","version":"2.0.0","description":"Ứng dụng xem truyền hình VTV Prime","category":"Truyền Hình","packageName":"","icon":"icons/app-vtvprime.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/vtvprime.apk","downloadKey":"vtvprime-apk"},
     {"name":"MyTV","version":"4.67.0_530_20251008","description":"Ứng dụng truyền hình MyTV","category":"Truyền Hình","packageName":"","icon":"icons/app-mytv.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/mytv.apk","downloadKey":"mytv-apk"},
     {"name":"Get Out","version":"2.end","description":"Ứng dụng dành cho Android TV","category":"Truyền Hình","packageName":"","icon":"icons/app-get-out.png","apk":"getout.apk","downloadKey":"getout-apk"},
-	{"name":"Sport Stream","version":"2.4","description":"Ứng dụng dành cho Android TV","category":"Truyền Hình","packageName":"","icon":"icons/app-sport-stream.png","apk":"sportstream.apk","downloadKey":"sportstream-apk"},
+	{"name":"Sport Stream","version":"2.7","description":"Ứng dụng dành cho Android TV","category":"Truyền Hình","packageName":"","icon":"icons/app-sport-stream.png","apk":"sportstream.apk","downloadKey":"sportstream-apk"},
 
     {"name":"MapVoice","version":"2.end","description":"Công cụ hỗ trợ điều khiển giọng nói","category":"Trợ Lý Giọng Nói","packageName":"","icon":"icons/app-mapvoice.png","apk":"mapvoice.apk","downloadKey":"mapvoice-apk"},
     {"name":"Super Voice","version":"2.end","description":"Công cụ hỗ trợ điều khiển giọng nói","category":"Trợ Lý Giọng Nói","packageName":"","icon":"icons/app-supervoice.png","apk":"supervoice.apk","downloadKey":"supervoice-apk"},
