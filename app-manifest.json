@@ -45,7 +45,7 @@
     {"name":"Trình duyệt TV Bro","version":"","description":"Trình duyệt web tối ưu cho Android TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-tvbro.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/tvbro.apk","downloadKey":"tvbro-apk"},
     {"name":"Trình duyệt Cốc Cốc TV","version":"","description":"Trình duyệt Cốc Cốc dành cho TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-coccoc.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/coccoc.apk","downloadKey":"coccoc-apk"},
     {"name":"Projectivy Launcher","version":"4.71","description":"Launcher tùy biến dành cho Android TV","category":"Ứng Dụng Khác","packageName":"com.spocky.projengmenu","icon":"icons/app-project.png","apk":"project.apk","downloadKey":"project-apk"},
-	{"name":"XAPK Installer","version":"1.0.1","description":"Trình cài đặt XAPK dành cho Android TV","category":"Ứng Dụng Khác","packageName":"com.vietmitv.xapkinstaller","icon":"icons/app-xapk.png","apk":"xapk.apk","downloadKey":"xapk-apk"},
+	{"name":"VXM Manager","version":"1.1.1","description":"Trình quản lý ứng dụng dành cho Android TV","category":"Ứng Dụng Khác","packageName":"com.vxm.manager","icon":"icons/app-manager.png","apk":"manager.apk","downloadKey":"manager-apk"},
     {"name":"Việt Xiaomi ADB Terminal","version":"1.0","description":"Công cụ ADB terminal dành cho TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-adb.png","apk":"adb.apk","downloadKey":"adb-apk"}
   ]
 }
