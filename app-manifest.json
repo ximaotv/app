@@ -37,7 +37,7 @@
     {"name":"EZVIZ Camera","version":"","description":"Ứng dụng xem camera EZVIZ trên TV","category":"Camera An Ninh","packageName":"","icon":"icons/app-ezviz.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/ezviz.apk","downloadKey":"ezviz-apk"},
 	{"name":"HIK Camera","version":"","description":"Ứng dụng xem camera HIK trên TV","category":"Camera An Ninh","packageName":"","icon":"icons/app-hik.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/hik.apk","downloadKey":"hik-apk"},
 
-    {"name":"Việt Xiaomi Store","version":"1.0","description":"Kho ứng dụng dành cho Android TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-vxm.png","apk":"vxmstore.apk","downloadKey":"vxmstore-apk"},
+    {"name":"Việt Xiaomi Store","version":"1.1.0","description":"Kho ứng dụng dành cho Android TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-vxm.png","apk":"vxmstore.apk","downloadKey":"vxmstore-apk"},
     {"name":"Dọn dẹp RAM","version":"1.2","description":"Ứng dụng dọn dẹp RAM cho GoogleTV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-task.png","apk":"taskmgr.apk","downloadKey":"taskmgr-apk"},
 	{"name":"MiX Silver","version":"","description":"Ứng dụng quản lý file cho Android TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-mix.png","apk":"mix.apk","downloadKey":"mix-apk"},
 	{"name":"MStore2","version":"","description":"Kho ứng dụng dành cho Android TV","category":"Ứng Dụng Khác","packageName":"","icon":"icons/app-mstore2.png","apk":"mstore.apk","downloadKey":"mstore-apk"},
