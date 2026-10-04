@@ -45,7 +45,7 @@
     {"name":"Trình duyệt TV Bro","version":"","versionCode":59,"description":"Trình duyệt web tối ưu cho Android TV","category":"Ứng Dụng Khác","packageName":"com.phlox.tvwebbrowser","icon":"icons/app-tvbro.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/tvbro.apk","downloadKey":"tvbro-apk"},
     {"name":"Trình duyệt Cốc Cốc TV","version":"","versionCode":767219900,"description":"Trình duyệt Cốc Cốc dành cho TV","category":"Ứng Dụng Khác","packageName":"com.coccoc.trinhduyet_tv","icon":"icons/app-coccoc.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/coccoc.apk","downloadKey":"coccoc-apk"},
     {"name":"Projectivy Launcher","version":"4.71","versionCode":95,"description":"Launcher tùy biến dành cho Android TV","category":"Ứng Dụng Khác","packageName":"com.spocky.projengmenu","icon":"icons/app-project.png","apk":"project.apk","downloadKey":"project-apk"},
-	{"name":"VXM Manager","version":"1.1.2","versionCode":5,"description":"Trình quản lý ứng dụng dành cho Android TV","category":"Ứng Dụng Khác","packageName":"com.vxm.manager","icon":"icons/app-manager.png","apk":"manager.apk","downloadKey":"manager-apk"},
+	{"name":"VXM Manager","version":"1.2.1","versionCode":5,"description":"Trình quản lý ứng dụng dành cho Android TV","category":"Ứng Dụng Khác","packageName":"com.vxm.manager","icon":"icons/app-manager.png","apk":"manager.apk","downloadKey":"manager-apk"},
     {"name":"Việt Xiaomi ADB Terminal","version":"1.0","versionCode":4,"description":"Công cụ ADB terminal dành cho TV","category":"Ứng Dụng Khác","packageName":"com.vxm.adb","icon":"icons/app-adb.png","apk":"adb.apk","downloadKey":"adb-apk"}
   ]
 }
