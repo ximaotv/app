@@ -10,7 +10,7 @@
     {"name":"TikTok Lite","version":"","versionCode":390903,"description":"TikTok dành cho Android TV","category":"YouTube","packageName":"com.zhiliaoapp.musically.go","icon":"icons/app-tiktok-lite.png","apk":"tiktok.apk","downloadKey":"tiktok-apk"},
 
     {"name":"VietMITV","version":"21","versionCode":78,"description":"Ứng dụng giọng nói đa năng cho TV","category":"Truyền Hình","packageName":"com.vxm.voiceassist.googletv","icon":"icons/app-vietmitv.png","apk":"vietmitv.apk","downloadKey":"vietmitv-apk"},
-	{"name":"FPT Play","version":"7.34.13","versionCode":4394,"description":"Ứng dụng truyền hình FPT Play","category":"Truyền Hình","packageName":"net.fptplay.ottbox","icon":"icons/app-fptplay.png","apk":"https://github.com/ximaotv/khoapp/raw/refs/heads/main/fptplay.xapk","downloadKey":"fptplay-xapk"},
+	{"name":"FPT Play","version":"7.34.13","versionCode":4394,"description":"Ứng dụng truyền hình FPT Play","category":"Truyền Hình","packageName":"net.fptplay.ottbox","icon":"icons/app-fptplay.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/fptplay14.apk","downloadKey":"fptplay14-apk"},
     {"name":"TV360","version":"6.3.1","versionCode":633,"description":"Ứng dụng truyền hình TV360","category":"Truyền Hình","packageName":"com.viettel.tv360.tv","icon":"icons/app-tv360.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/tv360.apk","downloadKey":"tv360-apk"},
     {"name":"VTV Go","version":"12.9.21","versionCode":260922,"description":"Ứng dụng xem truyền hình VTV","category":"Truyền Hình","packageName":"vn.vtv.vtvgotv","icon":"icons/app-vtvgo.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/vtvgo.apk","downloadKey":"vtvgo-apk"},
     {"name":"VTV Prime","version":"2.0.0","versionCode":63,"description":"Ứng dụng xem truyền hình VTV Prime","category":"Truyền Hình","packageName":"vn.vtvcab.vtvprime.atv","icon":"icons/app-vtvprime.png","apk":"https://media.githubusercontent.com/media/ximaotv/khoapp/main/vtvprime.apk","downloadKey":"vtvprime-apk"},
@@ -51,3 +51,4 @@
     {"name":"VXM ADB Terminal","version":"1.0","versionCode":4,"description":"Công cụ ADB terminal dành cho TV","category":"Ứng Dụng Khác","packageName":"com.vxm.adb","icon":"icons/app-adb.png","apk":"adb.apk","downloadKey":"adb-apk"}
   ]
 }
+
