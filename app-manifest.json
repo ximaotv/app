@@ -21,7 +21,7 @@
     {"name":"VAppTV","version":"1.0.2","versionCode":3,"description":"Ứng dụng truyền hình dành cho TV","category":"Truyền Hình","packageName":"com.vproject.vapptv","icon":"icons/app-vapptv.png","apk":"vapp.apk","downloadKey":"vapp-apk"},
     {"name":"Get Out","version":"V.I.P","versionCode":8,"description":"Ứng dụng dành cho Android TV","category":"Truyền Hình","packageName":"com.linor.vn.getout","icon":"icons/app-get-out.png","apk":"getout.apk","downloadKey":"getout-apk"},
 	
-	{"name":"Phim4K","version":"2.7.0","versionCode":80,"description":"Ứng dụng xem phim trên TV","category":"Xem Phim","packageName":"com.oxootv.spagreen","icon":"icons/app-phim4k.png","apk":"phim4k.apk","downloadKey":"phim4k-apk"},
+	{"name":"Phim4K","version":"2.7.1","versionCode":80,"description":"Ứng dụng xem phim trên TV","category":"Xem Phim","packageName":"com.oxootv.spagreen","icon":"icons/app-phim4k.png","apk":"phim4k.apk","downloadKey":"phim4k-apk"},
     {"name":"Chợ Phim","version":"1.1.0","versionCode":10100,"description":"Ứng dụng xem phim trên TV","category":"Xem Phim","packageName":"com.chophim.tv","icon":"icons/app-chophim.png","apk":"chophim.apk","downloadKey":"chophim-apk"},
     {"name":"NVC Phim","version":"2.3.8","versionCode":1002,"description":"Ứng dụng xem phim trên TV","category":"Xem Phim","packageName":"com.nvc.nvcphim","icon":"icons/app-NVC.png","apk":"NVC.apk","downloadKey":"nvc-apk"},
     {"name":"Sài Gòn Phim","version":"1.7","versionCode":16,"description":"Ứng dụng xem phim trên TV","category":"Xem Phim","packageName":"com.mvotv","icon":"icons/app-saigonphim.png","apk":"sgphim.apk","downloadKey":"sgphim-apk"},
