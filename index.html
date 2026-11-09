@@ -2,209 +2,265 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kho Ứng Dụng Xiaomi TV</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Việt Xiaomi Store</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&amp;display=swap">
     <style>
         :root {
-            --primary-color: #ff6600;
-            --primary-hover: #e05500;
-            --bg-color: #fdfbf7;
-            --card-bg: #ffffff;
-            --text-color: #333333;
-            --border-color: #ffe6d5;
+            color-scheme: dark;
+            --bg: #100e12;
+            --surface: #1c191f;
+            --ink: #fff9f4;
+            --muted: #c8bec6;
+            --orange: #ffad75;
+            --gutter: clamp(12px, 3.4vw, 66px);
+            --left: max(var(--gutter), env(safe-area-inset-left));
+            --right: max(var(--gutter), env(safe-area-inset-right));
+            --top: max(10px, env(safe-area-inset-top));
+            --toolbar-height: 64px;
+            --focus-offset: 74px;
         }
+        * { box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
             margin: 0;
-            padding: 20px;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--ink);
+            font: 16px/1.45 "Google Sans", "Segoe UI", Arial, sans-serif;
+            -webkit-text-size-adjust: 100%;
         }
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid var(--primary-color);
-            width: 100%;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .header h1 {
-            color: var(--primary-color);
-            margin: 0 0 10px 0;
-            font-size: 28px;
-        }
-        .header p {
-            margin: 0;
-            color: #666;
-            font-size: 14px;
-        }
-
-        /* --- THANH DANH MỤC --- */
-        .category-nav {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto 30px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
+        a { color: inherit; }
+        :focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+        [hidden] { display: none !important; }
+        .toolbar {
             position: sticky;
             top: 0;
-            background-color: var(--bg-color);
-            padding: 12px 0;
-            z-index: 10;
+            z-index: 3;
+            padding: var(--top) var(--right) 10px var(--left);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .nav-pill {
-            display: inline-block;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            text-decoration: none;
-            padding: 8px 16px;
+        .glass {
+            color: var(--ink);
+            background: #262129;
+            box-shadow: inset 0 1px 0 #ffffff3b, inset 0 -1px 0 #ffffff16, 0 6px 20px #0006;
             border-radius: 999px;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.2s ease;
+        }
+        @supports (backdrop-filter: blur(1px)) {
+            .glass {
+                background: linear-gradient(145deg, #ffffff16, transparent 55%), #211b23eb;
+                backdrop-filter: blur(18px) saturate(145%);
+            }
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            flex: none;
+            gap: 7px;
+            padding: 4px 14px 4px 5px;
+            font-weight: 700;
             white-space: nowrap;
         }
-        .nav-pill:hover {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            color: #fff;
+        .brand svg { width: 36px; height: 36px; flex: none; }
+        .brand strong { color: var(--orange); }
+        .category-nav {
+            flex: 1;
+            display: flex;
+            min-width: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding: 4px;
         }
-
-        .category-section {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto 36px;
-            scroll-margin-top: 70px;
+        .category-nav::-webkit-scrollbar { display: none; }
+        .nav-pill {
+            flex: none;
+            padding: 8px clamp(10px, 1.1vw, 20px);
+            border-radius: 999px;
+            font-size: .9rem;
+            font-weight: 600;
+            text-decoration: none;
+            white-space: nowrap;
         }
-        .category-title {
-            font-size: 20px;
-            color: var(--primary-color);
-            border-left: 5px solid var(--primary-color);
-            padding-left: 12px;
-            margin: 0 0 16px 0;
+        .nav-pill:hover, .nav-pill:focus-visible { background: #ffffff24; }
+        .nav-pill:focus-visible { outline-offset: -3px; }
+        .nav-pill-hot { color: var(--orange); }
+        .fullscreen {
+            flex: none;
+            width: 44px;
+            height: 44px;
+            border: 0;
+            font: inherit;
+            cursor: pointer;
         }
-
-        /* --- CẤU HÌNH GRID CHIA 2 CỘT --- */
-        .grid-container {
-            width: 100%;
+        .fullscreen svg { vertical-align: middle; }
+        .layout { padding: 0 var(--right) max(40px, env(safe-area-inset-bottom)) var(--left); }
+        .hero {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: center;
+            gap: clamp(10px, 3vw, 48px);
+            position: relative;
+            margin: 6px 0 clamp(18px, 3vw, 40px);
+            padding: clamp(16px, 3.2vw, 52px);
+            border: 1px solid #ffffff1c;
+            border-radius: clamp(18px, 2vw, 34px);
+            background: radial-gradient(ellipse at 92% 16%, #ae4c23, transparent 62%),
+                        linear-gradient(115deg, #211820 15%, #37202a 65%, #522b28);
+            overflow-wrap: anywhere;
         }
-
+        .hero h1 {
+            margin: 0 0 6px;
+            color: var(--muted);
+            font-size: clamp(.72rem, 1.25vw, .95rem);
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+        .hero-category { margin: 0 0 5px; color: var(--orange); font-size: .79rem; font-weight: 700; }
+        .hero-title { margin: 0; font-size: clamp(1.35rem, 3.8vw, 4rem); line-height: 1.08; }
+        .hero-support { margin: 10px 0 0; color: var(--muted); font-size: clamp(.72rem, 1.12vw, 1rem); }
+        .hero-support a { color: #ffd2b1; }
+        .hero-art {
+            display: grid;
+            place-items: center;
+            width: clamp(66px, 14vw, 220px);
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ff9f6552 37%, #ffffff1f 38%, transparent 40%,
+                        transparent 60%, #ffffff32 61%, transparent 62%);
+        }
+        .hero-icon {
+            width: 66%;
+            aspect-ratio: 1;
+            border-radius: 24%;
+            object-fit: contain;
+            background: #211a20;
+            box-shadow: 0 16px 32px #180f1466;
+        }
+        .category-section { margin-bottom: clamp(24px, 3vw, 44px); scroll-margin-top: var(--focus-offset); }
+        .category-title { margin: 0 0 12px; font-size: clamp(1.08rem, 1.65vw, 1.55rem); }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(clamp(128px, 13vw, 230px), 1fr));
+            gap: clamp(8px, 1.2vw, 20px);
+        }
         .apk-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 16px;
-            box-shadow: 0 2px 5px rgba(255, 102, 0, 0.05);
-            transition: all 0.2s ease-in-out;
+            min-width: 0;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            padding: clamp(10px, 1.3vw, 20px);
+            border: 1px solid #ffffff18;
+            border-radius: clamp(14px, 1.4vw, 24px);
+            background: var(--surface);
         }
-        .apk-card:hover {
-            border-color: var(--primary-color);
-            box-shadow: 0 4px 10px rgba(255, 102, 0, 0.15);
-            transform: translateY(-2px);
-        }
-        .apk-info {
-            overflow: hidden;
-            margin-bottom: 12px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        .apk-card:hover, .apk-card:focus-within { border-color: var(--orange); background: #29232a; }
+        .apk-info { display: grid; justify-items: start; gap: 6px; margin-bottom: 12px; }
         .app-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
-            object-fit: cover;
-            margin-bottom: 8px;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-            background: #f2f2f2;
+            width: clamp(43px, 4.3vw, 76px);
+            aspect-ratio: 1;
+            border-radius: 24%;
+            object-fit: contain;
+            background: #151217;
         }
-        .title-app {
-            display: block;
-            font-weight: bold;
-            font-size: 17px;
-            color: #111;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            text-align: center;
-            max-width: 100%;
-        }
+        .title-app { font-weight: 700; overflow-wrap: anywhere; }
+        .download-count { color: var(--muted); font-size: .78rem; }
         .btn-download {
             display: block;
+            padding: 9px 6px;
             text-align: center;
-            background-color: var(--primary-color);
-            color: #fff;
-            padding: 14px 20px;
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 16px;
-            transition: all 0.2s ease;
-            box-shadow: 0 3px 6px rgba(255, 102, 0, 0.2);
+            font-weight: 700;
+            color: #251208;
+            background: linear-gradient(#ffbf91, #ffa367);
+            box-shadow: inset 0 1px 0 #ffffff66;
+            border-radius: 999px;
+            scroll-margin-top: var(--focus-offset);
         }
-        .btn-download:hover {
-            background-color: var(--primary-hover);
-            transform: scale(1.02);
+        .btn-download:hover { background: #ffd0ac; }
+        .download-toast {
+            position: fixed;
+            z-index: 4;
+            right: var(--right);
+            bottom: max(16px, env(safe-area-inset-bottom));
+            width: max-content;
+            max-width: calc(100% - var(--left) - var(--right));
+            padding: 12px 20px;
+            overflow-wrap: anywhere;
         }
-        .btn-download:active {
-            transform: scale(0.98);
+        @media (min-width: 900px) and (min-height: 650px) {
+            .hero { position: sticky; top: var(--toolbar-height); z-index: 2; }
+            .hero-art { width: clamp(105px, 13vw, min(210px, 18vh)); }
+            .hero { padding-block: clamp(14px, 2.4vh, 28px); }
         }
-        .download-count {
-            display: block;
-            margin-top: 5px;
-            color: #555;
-            font-size: 13px;
-            font-weight: 600;
-            text-align: center;
+        @media (max-width: 600px) {
+            :root { --focus-offset: 106px; }
+            .toolbar { display: grid; grid-template-columns: 1fr auto; gap: 6px; }
+            .brand { justify-self: start; }
+            .category-nav { grid-row: 2; grid-column: 1 / -1; }
+            .hero { grid-template-columns: minmax(0, 1fr) auto; }
+            .grid-container { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .title-app { font-size: .9rem; }
         }
-
-        .nav-pill-hot {
-            background-color: #fff0e6;
-            border-color: var(--primary-color);
-            color: var(--primary-color);
+        @media (orientation: landscape) and (max-height: 540px) {
+            .toolbar { display: flex; padding-bottom: 6px; }
+            .hero { padding-block: 10px; margin-block: 2px 10px; }
+            .hero-art { width: clamp(58px, 11vw, 95px); }
+            .hero-title { font-size: clamp(1.2rem, 3.6vw, 2.2rem); }
+            .hero-support { margin-top: 4px; }
+            .grid-container { grid-template-columns: repeat(auto-fill, minmax(122px, 1fr)); }
+            .apk-card { padding: 8px; }
+            .apk-info { margin-bottom: 6px; gap: 3px; }
+            .app-icon { width: 32px; }
+            .title-app { font-size: .85rem; line-height: 1.2; }
+            .category-title { margin-bottom: 8px; }
+            .btn-download { padding-block: 7px; }
         }
-        .nav-pill-hot:hover {
-            background-color: var(--primary-color);
-            color: #fff;
+        @media (orientation: landscape) and (max-height: 360px) {
+            .apk-info { grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 4px; }
+            .download-count { grid-column: 1 / -1; }
         }
-        .hot-section .category-title {
-            color: #e8341c;
-            border-left-color: #e8341c;
+        @media (prefers-reduced-transparency: reduce) {
+            .glass { background: #262129; backdrop-filter: none; }
         }
-
-        /* --- CẤU HÌNH CHO MOBILE --- */
-        @media (max-width: 580px) {
-            .grid-container {
-                grid-template-columns: repeat(1, 1fr);
-            }
-            .nav-pill {
-                font-size: 13px;
-                padding: 7px 12px;
-            }
+        @media (forced-colors: active) {
+            .glass, .btn-download { border: 1px solid ButtonText; }
+            :focus-visible { outline-color: Highlight; }
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>KHO ỨNG DỤNG MIỄN PHÍ</h1>
-        <p>Hỗ trợ cài đặt và xử lý các lỗi liên quan</p>
-        <p>Việt Xiaomi - 0343.22.08.93</p>
-    </div>
-
-    <nav class="category-nav">
+    <header class="toolbar">
+        <div class="brand glass"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF9A2E"/>
+      <stop offset="0.55" stop-color="#FF6A00"/>
+      <stop offset="1" stop-color="#F04800"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".30"/>
+      <stop offset=".45" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="star" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF27A"/>
+      <stop offset="1" stop-color="#FFC400"/>
+    </linearGradient>
+    <filter id="drop" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#7a2300" flood-opacity=".35"/>
+    </filter>
+  </defs>
+  <rect x="24" y="24" width="464" height="464" rx="116" fill="url(#bg)"/>
+  <rect x="24" y="24" width="464" height="464" rx="116" fill="url(#shine)"/>
+  <!-- V for Việt -->
+  <path d="M136 150 L256 384 L376 150" fill="none" stroke="#fff" stroke-width="72"
+        stroke-linecap="round" stroke-linejoin="round" filter="url(#drop)"/>
+  <!-- gold star cradled in the V -->
+  <path filter="url(#drop)" fill="url(#star)"
+        d="M256.0 92.0 L270.3 132.3 L313.1 133.5 L279.1 159.5 L291.3 200.5 L256.0 176.3 L220.7 200.5 L232.9 159.5 L198.9 133.5 L241.7 132.3 Z"/>
+</svg><span>Việt Xiaomi <strong>Store</strong></span></div>
+        <nav class="category-nav glass" aria-label="Danh mục ứng dụng">
             <a href="#cat-hot" class="nav-pill nav-pill-hot" id="nav-hot" style="display:none;">🔥 Hot</a>
             <a href="#cat-phim" class="nav-pill">🎬 Xem Phim</a>
             <a href="#cat-tv" class="nav-pill">📡 Truyền Hình</a>
@@ -212,7 +268,29 @@
             <a href="#cat-dieukhien" class="nav-pill">🎙️ Trợ Lý Giọng Nói</a>
             <a href="#cat-camera" class="nav-pill">📷 Camera An Ninh</a>
             <a href="#cat-khac" class="nav-pill">🧰 Ứng Dụng Khác</a>
-    </nav>
+        </nav>
+        <button type="button" class="fullscreen glass" id="fullscreen" aria-label="Toàn màn hình" aria-pressed="false" hidden>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/>
+            </svg>
+        </button>
+    </header>
+
+    <main class="layout">
+        <section class="hero" aria-labelledby="store-heading">
+            <div>
+                <h1 id="store-heading">Kho ứng dụng miễn phí</h1>
+                <p class="hero-category" id="hero-category">Android TV</p>
+                <h2 class="hero-title" id="hero-title" hidden></h2>
+                <p class="hero-support">Hỗ trợ cài đặt · <a href="tel:+84343220893">0343.22.08.93</a></p>
+            </div>
+            <div class="hero-art">
+                <img class="hero-icon" id="hero-icon" src="icons/app-ytb.png" alt="" hidden>
+            </div>
+        </section>
+        <div class="catalog">
+
 
     <section class="category-section hot-section" id="cat-hot" style="display:none;">
         <h2 class="category-title">🔥 Ứng Dụng Hot</h2>
@@ -350,14 +428,6 @@
                     <span class="title-app">VietMITV</span>
                 </div>
                 <a href="vietmitv.apk" class="btn-download" download>Tải Về</a>
-            </div>
-			
-			<div class="apk-card app-vietmitv99">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-vietmitv.png" alt="" loading="lazy">
-                    <span class="title-app">VietMITV Gán Phím</span>
-                </div>
-                <a href="vietmitv99.apk" class="btn-download" download>Tải Về</a>
             </div>
 			
             <div class="apk-card app-quantv">
@@ -598,16 +668,12 @@
                 </div>
                 <a href="manager.apk" class="btn-download" download>Tải Về</a>
             </div>
-			
-			<div class="apk-card app-adb">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-adb.png" alt="" loading="lazy">
-                    <span class="title-app">Việt Xiaomi ADB Terminal</span>
-                </div>
-                <a href="adb.apk" class="btn-download" download>Tải Về</a>
-            </div>
         </div>
     </section>
+
+        </div>
+    </main>
+    <div class="download-toast glass" role="status" id="download-toast" hidden></div>
 
     <script>
         (function () {
@@ -623,6 +689,110 @@
                 visitorId = generateUUID();
                 localStorage.setItem(visitorKey, visitorId);
             }
+
+
+            var catalog = document.querySelector('.catalog');
+            var heroCategory = document.getElementById('hero-category');
+            var heroTitle = document.getElementById('hero-title');
+            var heroIcon = document.getElementById('hero-icon');
+            var toast = document.getElementById('download-toast');
+            var toastTimer;
+
+            function previewApp(card) {
+                var section = card.closest('.category-section');
+                heroCategory.textContent = section.querySelector('.category-title').textContent.trim();
+                heroTitle.textContent = card.querySelector('.title-app').textContent.trim();
+                heroIcon.src = card.querySelector('.app-icon').src;
+                heroIcon.hidden = false;
+                heroTitle.hidden = false;
+            }
+
+            catalog.addEventListener('focusin', function (event) {
+                var card = event.target.closest('.apk-card');
+                if (!card) return;
+                previewApp(card);
+                updateOffsets();
+                var offset = parseFloat(root.style.getPropertyValue('--focus-offset'));
+                var top = event.target.getBoundingClientRect().top;
+                if (top < offset) window.scrollBy(0, top - offset);
+            });
+            catalog.addEventListener('mouseover', function (event) {
+                var card = event.target.closest('.apk-card');
+                if (card && !card.contains(event.relatedTarget)) previewApp(card);
+            });
+
+            catalog.addEventListener('keydown', function (event) {
+                var button = event.target.closest('.btn-download');
+                var direction = { ArrowLeft: [-1, 0], ArrowRight: [1, 0],
+                    ArrowUp: [0, -1], ArrowDown: [0, 1] }[event.key];
+                if (!button || !direction || event.altKey || event.ctrlKey || event.metaKey) return;
+                var origin = button.getBoundingClientRect();
+                var best = null;
+                var bestScore = Infinity;
+                var buttons = catalog.querySelectorAll('.btn-download');
+                for (var i = 0; i < buttons.length; i++) {
+                    var candidate = buttons[i];
+                    if (!candidate.getClientRects().length) continue;
+                    var rect = candidate.getBoundingClientRect();
+                    var dx = (rect.left + rect.right - origin.left - origin.right) / 2;
+                    var dy = (rect.top + rect.bottom - origin.top - origin.bottom) / 2;
+                    var primary = dx * direction[0] + dy * direction[1];
+                    var cross = Math.abs(dx * direction[1] + dy * direction[0]);
+                    if (primary <= 8 || (direction[0] && cross > origin.height)) continue;
+                    var score = primary + cross * 2;
+                    if (score < bestScore) {
+                        best = candidate;
+                        bestScore = score;
+                    }
+                }
+                if (best) {
+                    event.preventDefault();
+                    best.focus();
+                }
+            });
+
+            function showDownload(button) {
+                var card = button.closest('.apk-card');
+                previewApp(card);
+                toast.textContent = 'Đã yêu cầu tải ' + card.querySelector('.title-app').textContent.trim();
+                toast.hidden = false;
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(function () { toast.hidden = true; }, 5000);
+            }
+            previewApp(catalog.querySelector('.apk-card'));
+
+            var toolbar = document.querySelector('.toolbar');
+            var hero = document.querySelector('.hero');
+            var root = document.documentElement;
+            var fullscreen = document.getElementById('fullscreen');
+
+            function updateOffsets() {
+                var toolbarHeight = toolbar.offsetHeight;
+                var stickyHeroHeight = getComputedStyle(hero).position === 'sticky' ? hero.offsetHeight : 0;
+                root.style.setProperty('--toolbar-height', toolbarHeight + 'px');
+                root.style.setProperty('--focus-offset', (toolbarHeight + stickyHeroHeight + 12) + 'px');
+            }
+            window.addEventListener('resize', updateOffsets);
+            if (typeof ResizeObserver !== 'undefined') {
+                var resizeObserver = new ResizeObserver(updateOffsets);
+                resizeObserver.observe(toolbar);
+                resizeObserver.observe(hero);
+            }
+            updateOffsets();
+
+            if (document.fullscreenEnabled && root.requestFullscreen) {
+                fullscreen.hidden = false;
+                fullscreen.addEventListener('click', function () {
+                    var operation = document.fullscreenElement ? document.exitFullscreen() : root.requestFullscreen();
+                    operation.catch(function () {});
+                });
+                document.addEventListener('fullscreenchange', function () {
+                    var active = Boolean(document.fullscreenElement);
+                    fullscreen.setAttribute('aria-pressed', String(active));
+                    fullscreen.setAttribute('aria-label', active ? 'Thoát toàn màn hình' : 'Toàn màn hình');
+                });
+            }
+
 
             function generateUUID() {
                 if (window.crypto && typeof window.crypto.randomUUID === 'function') {
@@ -664,6 +834,7 @@
                     document.body.appendChild(download);
                     download.click();
                     download.remove();
+                    showDownload(button);
 
                     var storageKey = 'ximaotv-download:' + key;
                     var lastCounted = Number(localStorage.getItem(storageKey) || 0);
