@@ -33,16 +33,14 @@ a { color: inherit; text-decoration: none; }
 :focus { outline: none; }
 * { -webkit-tap-highlight-color: transparent; }
 /* Capsule-following orange focus ring (box-shadow follows border-radius, outline does not on old TV WebViews) */
-.glass:focus, .contact:focus, .app-tile:focus {
+.glass:focus, .contact:focus, .app-tile:focus,
+.glass:hover, .contact:hover, .app-tile:hover {
     outline: none;
-    box-shadow: 0 0 0 3px #fff, 0 0 0 7px var(--orange), 0 0 26px 8px #ff8a3d88, 0 10px 30px #000a;
-    animation: focus-glow 1.6s ease-in-out infinite;
+    box-shadow: 0 0 0 3px #fff, 0 0 0 7px var(--orange), 0 0 18px 4px #ff8a3d66;
 }
-.glass:focus { --glass-alpha: .6; transform: scale(1.06); }
-.contact:focus { background: #ffffff26; transform: scale(1.03); }
-.app-tile:focus { background: var(--surface-hi); transform: scale(1.04); }
-@-webkit-keyframes focus-glow { 50% { box-shadow: 0 0 0 3px #fff, 0 0 0 9px var(--orange), 0 0 40px 14px #ff8a3daa, 0 10px 30px #000a; } }
-@keyframes focus-glow { 50% { box-shadow: 0 0 0 3px #fff, 0 0 0 9px var(--orange), 0 0 40px 14px #ff8a3daa, 0 10px 30px #000a; } }
+.glass:focus, .glass:hover { --glass-alpha: .6; transform: scale(1.06); }
+.contact:focus, .contact:hover { background: #ffffff26; transform: scale(1.03); }
+.app-tile:focus, .app-tile:hover { background: var(--surface-hi); transform: scale(1.04); }
 
 /* ---------- Liquid Glass (controls only) ---------- */
 .glass {
@@ -83,6 +81,13 @@ a { color: inherit; text-decoration: none; }
     pointer-events: none;
 }
 .toolbar > * { pointer-events: auto; }
+/* Scrim behind the floating bar so the logo/title stay legible over scrolled content */
+.toolbar::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 0; bottom: -28px; z-index: -1; pointer-events: none;
+    background: linear-gradient(#0e0c10 0%, #0e0c10f2 55%, #0e0c1000 100%);
+    opacity: 0; transition: opacity .25s;
+}
+.scrolled .toolbar::before { opacity: 1; }
 .brand {
     display: flex; align-items: center; gap: 10px; justify-self: start;
     font-weight: 700; font-size: clamp(1.05rem, 1.6vw, 1.4rem); white-space: nowrap;
@@ -144,11 +149,11 @@ dialog {
     max-width: min(420px, calc(100vw - 32px)); width: 100%;
 }
 dialog::backdrop { background: #0009; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
-.panel { border-radius: 34px; padding: 26px; display: grid; gap: 16px; text-align: center; --glass-alpha: .72; cursor: default; }
+.panel { border-radius: 34px; padding: 22px 26px; display: grid; gap: 12px; max-height: 92vh; overflow: auto; text-align: center; --glass-alpha: .72; cursor: default; }
 .panel h2 { margin: 0; font-size: 1.3rem; }
 .panel p { margin: 0; color: var(--muted); font-size: .92rem; }
 .qr {
-    width: 260px; height: 260px; max-width: 70vw; max-height: 70vw; margin: 0 auto; border-radius: 22px;
+    width: 260px; height: 260px; max-width: 70vw; max-height: 70vw; max-height: 45vh; max-width: 45vh; margin: 0 auto; border-radius: 22px;
     background: #fff; padding: 12px; display: grid; place-items: center; color: #333; font-size: .85rem;
 }
 .qr img { width: 100%; height: 100%; object-fit: contain; }
@@ -194,7 +199,7 @@ dialog::backdrop { background: #0009; -webkit-backdrop-filter: blur(6px); backdr
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { transition: none !important; }
-    .app-tile:focus, .glass:focus, .contact:focus, .glass:active { transform: none; animation: none; }
+    .app-tile:focus, .glass:focus, .contact:focus, .glass:active { transform: none; }
 }
 @media (forced-colors: active) {
     .glass, .app-tile { border: 1px solid ButtonText; }
