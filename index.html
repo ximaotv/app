@@ -1,923 +1,466 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Việt Xiaomi Store</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&amp;display=swap">
-    <style>
-        :root {
-            color-scheme: dark;
-            --bg: #100e12;
-            --surface: #1c191f;
-            --ink: #fff9f4;
-            --muted: #c8bec6;
-            --orange: #ffad75;
-            --gutter: clamp(12px, 3.4vw, 66px);
-            --left: max(var(--gutter), env(safe-area-inset-left));
-            --right: max(var(--gutter), env(safe-area-inset-right));
-            --top: max(10px, env(safe-area-inset-top));
-            --toolbar-height: 64px;
-            --focus-offset: 74px;
-        }
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            min-height: 100vh;
-            background: var(--bg);
-            color: var(--ink);
-            font: 16px/1.45 "Google Sans", "Segoe UI", Arial, sans-serif;
-            -webkit-text-size-adjust: 100%;
-        }
-        a { color: inherit; }
-        :focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
-        [hidden] { display: none !important; }
-        .toolbar {
-            position: sticky;
-            top: 0;
-            z-index: 3;
-            padding: var(--top) var(--right) 10px var(--left);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .glass {
-            color: var(--ink);
-            background: #262129;
-            box-shadow: inset 0 1px 0 #ffffff3b, inset 0 -1px 0 #ffffff16, 0 6px 20px #0006;
-            border-radius: 999px;
-        }
-        @supports (backdrop-filter: blur(1px)) {
-            .glass {
-                background: linear-gradient(145deg, #ffffff16, transparent 55%), #211b23eb;
-                backdrop-filter: blur(18px) saturate(145%);
-            }
-        }
-        .brand {
-            display: flex;
-            align-items: center;
-            flex: none;
-            gap: 7px;
-            padding: 4px 14px 4px 5px;
-            font-weight: 700;
-            white-space: nowrap;
-        }
-        .brand svg { width: 36px; height: 36px; flex: none; }
-        .brand strong { color: var(--orange); }
-        .category-nav {
-            flex: 1;
-            display: flex;
-            min-width: 0;
-            overflow-x: auto;
-            scrollbar-width: none;
-            padding: 4px;
-        }
-        .category-nav::-webkit-scrollbar { display: none; }
-        .nav-pill {
-            flex: none;
-            padding: 8px clamp(10px, 1.1vw, 20px);
-            border-radius: 999px;
-            font-size: .9rem;
-            font-weight: 600;
-            text-decoration: none;
-            white-space: nowrap;
-        }
-        .nav-pill:hover, .nav-pill:focus-visible { background: #ffffff24; }
-        .nav-pill:focus-visible { outline-offset: -3px; }
-        .nav-pill-hot { color: var(--orange); }
-        .fullscreen {
-            flex: none;
-            width: 44px;
-            height: 44px;
-            border: 0;
-            font: inherit;
-            cursor: pointer;
-        }
-        .fullscreen svg { vertical-align: middle; }
-        .layout { padding: 0 var(--right) max(40px, env(safe-area-inset-bottom)) var(--left); }
-        .hero {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) auto;
-            align-items: center;
-            gap: clamp(10px, 3vw, 48px);
-            position: relative;
-            margin: 6px 0 clamp(18px, 3vw, 40px);
-            padding: clamp(16px, 3.2vw, 52px);
-            border: 1px solid #ffffff1c;
-            border-radius: clamp(18px, 2vw, 34px);
-            background: radial-gradient(ellipse at 92% 16%, #ae4c23, transparent 62%),
-                        linear-gradient(115deg, #211820 15%, #37202a 65%, #522b28);
-            overflow-wrap: anywhere;
-        }
-        .hero h1 {
-            margin: 0 0 6px;
-            color: var(--muted);
-            font-size: clamp(.72rem, 1.25vw, .95rem);
-            letter-spacing: .08em;
-            text-transform: uppercase;
-        }
-        .hero-category { margin: 0 0 5px; color: var(--orange); font-size: .79rem; font-weight: 700; }
-        .hero-title { margin: 0; font-size: clamp(1.35rem, 3.8vw, 4rem); line-height: 1.08; }
-        .hero-support { margin: 10px 0 0; color: var(--muted); font-size: clamp(.72rem, 1.12vw, 1rem); }
-        .hero-support a { color: #ffd2b1; }
-        .hero-art {
-            display: grid;
-            place-items: center;
-            width: clamp(66px, 14vw, 220px);
-            aspect-ratio: 1;
-            border-radius: 50%;
-            background: radial-gradient(circle, #ff9f6552 37%, #ffffff1f 38%, transparent 40%,
-                        transparent 60%, #ffffff32 61%, transparent 62%);
-        }
-        .hero-icon {
-            width: 66%;
-            aspect-ratio: 1;
-            border-radius: 24%;
-            object-fit: contain;
-            background: #211a20;
-            box-shadow: 0 16px 32px #180f1466;
-        }
-        .category-section { margin-bottom: clamp(24px, 3vw, 44px); scroll-margin-top: var(--focus-offset); }
-        .category-title { margin: 0 0 12px; font-size: clamp(1.08rem, 1.65vw, 1.55rem); }
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(clamp(128px, 13vw, 230px), 1fr));
-            gap: clamp(8px, 1.2vw, 20px);
-        }
-        .apk-card {
-            min-width: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: clamp(10px, 1.3vw, 20px);
-            border: 1px solid #ffffff18;
-            border-radius: clamp(14px, 1.4vw, 24px);
-            background: var(--surface);
-        }
-        .apk-card:hover, .apk-card:focus-within { border-color: var(--orange); background: #29232a; }
-        .apk-info { display: grid; justify-items: start; gap: 6px; margin-bottom: 12px; }
-        .app-icon {
-            width: clamp(43px, 4.3vw, 76px);
-            aspect-ratio: 1;
-            border-radius: 24%;
-            object-fit: contain;
-            background: #151217;
-        }
-        .title-app { font-weight: 700; overflow-wrap: anywhere; }
-        .download-count { color: var(--muted); font-size: .78rem; }
-        .btn-download {
-            display: block;
-            padding: 9px 6px;
-            text-align: center;
-            text-decoration: none;
-            font-weight: 700;
-            color: #251208;
-            background: linear-gradient(#ffbf91, #ffa367);
-            box-shadow: inset 0 1px 0 #ffffff66;
-            border-radius: 999px;
-            scroll-margin-top: var(--focus-offset);
-        }
-        .btn-download:hover { background: #ffd0ac; }
-        .download-toast {
-            position: fixed;
-            z-index: 4;
-            right: var(--right);
-            bottom: max(16px, env(safe-area-inset-bottom));
-            width: max-content;
-            max-width: calc(100% - var(--left) - var(--right));
-            padding: 12px 20px;
-            overflow-wrap: anywhere;
-        }
-        @media (min-width: 900px) and (min-height: 650px) {
-            .hero { position: sticky; top: var(--toolbar-height); z-index: 2; }
-            .hero-art { width: clamp(105px, 13vw, min(210px, 18vh)); }
-            .hero { padding-block: clamp(14px, 2.4vh, 28px); }
-        }
-        @media (max-width: 600px) {
-            :root { --focus-offset: 106px; }
-            .toolbar { display: grid; grid-template-columns: 1fr auto; gap: 6px; }
-            .brand { justify-self: start; }
-            .category-nav { grid-row: 2; grid-column: 1 / -1; }
-            .hero { grid-template-columns: minmax(0, 1fr) auto; }
-            .grid-container { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-            .title-app { font-size: .9rem; }
-        }
-        @media (orientation: landscape) and (max-height: 540px) {
-            .toolbar { display: flex; padding-bottom: 6px; }
-            .hero { padding-block: 10px; margin-block: 2px 10px; }
-            .hero-art { width: clamp(58px, 11vw, 95px); }
-            .hero-title { font-size: clamp(1.2rem, 3.6vw, 2.2rem); }
-            .hero-support { margin-top: 4px; }
-            .grid-container { grid-template-columns: repeat(auto-fill, minmax(122px, 1fr)); }
-            .apk-card { padding: 8px; }
-            .apk-info { margin-bottom: 6px; gap: 3px; }
-            .app-icon { width: 32px; }
-            .title-app { font-size: .85rem; line-height: 1.2; }
-            .category-title { margin-bottom: 8px; }
-            .btn-download { padding-block: 7px; }
-        }
-        @media (orientation: landscape) and (max-height: 360px) {
-            .apk-info { grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 4px; }
-            .download-count { grid-column: 1 / -1; }
-        }
-        @media (prefers-reduced-transparency: reduce) {
-            .glass { background: #262129; backdrop-filter: none; }
-        }
-        @media (forced-colors: active) {
-            .glass, .btn-download { border: 1px solid ButtonText; }
-            :focus-visible { outline-color: Highlight; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Việt Xiaomi Store</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&amp;display=swap">
+<style>
+:root {
+    color-scheme: dark;
+    --bg: #0e0c10;
+    --surface: #1c1920;
+    --surface-hi: #2a2530;
+    --ink: #fff9f4;
+    --muted: #bdb3bb;
+    --orange: #ffad75;
+    --gutter: clamp(14px, 3.4vw, 64px);
+    --left: max(var(--gutter), env(safe-area-inset-left));
+    --right: max(var(--gutter), env(safe-area-inset-right));
+    --glass-alpha: .38;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    margin: 0; min-height: 100vh;
+    background: radial-gradient(1200px 600px at 85% -10%, #4a2316 0%, transparent 60%), var(--bg);
+    background-attachment: fixed;
+    color: var(--ink);
+    font: 16px/1.45 "Google Sans", "Segoe UI", Arial, sans-serif;
+}
+a { color: inherit; text-decoration: none; }
+[hidden] { display: none !important; }
+:focus-visible { outline: 4px solid #fff; outline-offset: 4px; }
+
+/* ---------- Liquid Glass (controls only) ---------- */
+.glass {
+    position: relative; isolation: isolate;
+    border: 0; color: var(--ink); font: inherit; cursor: pointer;
+    border-radius: 999px;
+    background: rgba(34, 28, 38, .94);
+    box-shadow: inset 0 1px 0 #ffffff5c, inset 0 -1px 0 #ffffff1c, 0 8px 26px #0000008c;
+    transition: background-color .25s, transform .15s;
+}
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass {
+        background: rgba(34, 28, 38, var(--glass-alpha));
+        -webkit-backdrop-filter: blur(24px) saturate(190%);
+        backdrop-filter: blur(24px) saturate(190%);
+    }
+    .glass::before {
+        content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+        background: radial-gradient(120% 100% at 50% -35%, #ffffff3d, transparent 55%),
+                    radial-gradient(90% 70% at 50% 140%, #ffffff17, transparent 60%);
+    }
+    .glass::after {
+        content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; padding: 1px;
+        background: linear-gradient(155deg, #ffffff8c, #ffffff12 35%, #ffffff05 65%, #ffffff47);
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor; mask-composite: exclude;
+    }
+}
+.glass:hover { --glass-alpha: .5; }
+.glass:active { transform: scale(.96); }
+.scrolled .glass { --glass-alpha: .66; }   /* adaptive tint over content */
+
+/* ---------- Header ---------- */
+.toolbar {
+    position: sticky; top: 0; z-index: 5;
+    display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 16px;
+    padding: max(12px, env(safe-area-inset-top)) var(--right) 12px var(--left);
+    pointer-events: none;
+}
+.toolbar > * { pointer-events: auto; }
+.brand {
+    display: flex; align-items: center; gap: 10px; justify-self: start;
+    font-weight: 700; font-size: clamp(1.05rem, 1.6vw, 1.4rem); white-space: nowrap;
+    text-shadow: 0 2px 10px #000c;
+}
+.brand svg { width: clamp(38px, 3.4vw, 50px); height: auto; flex: none; }
+.brand strong { color: var(--orange); }
+.brand-text { display: grid; line-height: 1.15; }
+.tagline { display: none; font-size: .72em; font-weight: 600; color: var(--muted); letter-spacing: .02em; }
+.store-title {
+    margin: 0; text-align: center; white-space: nowrap;
+    font-weight: 700; font-size: clamp(.95rem, 1.7vw, 1.6rem); letter-spacing: .06em; text-transform: uppercase;
+    text-shadow: 0 2px 12px #000d;
+}
+.store-title span { color: var(--orange); }
+.actions { display: flex; gap: 10px; justify-self: end; align-items: center; }
+.action {
+    display: flex; align-items: center; gap: 8px;
+    padding: 11px clamp(16px, 1.6vw, 26px); font-weight: 700; font-size: clamp(.9rem, 1.1vw, 1.05rem);
+}
+.action svg { width: 20px; height: 20px; }
+.action-support { color: #ffd2b1; }
+.fullscreen { flex: none; width: 48px; height: 48px; display: grid; place-items: center; }
+
+/* ---------- Content (opaque) ---------- */
+.layout { padding: 8px var(--right) max(48px, env(safe-area-inset-bottom)) var(--left); }
+.category-section { margin-bottom: clamp(28px, 3.4vw, 52px); scroll-margin-top: 90px; }
+.category-title { margin: 0 0 16px; font-size: clamp(1.3rem, 2.1vw, 2rem); display: flex; align-items: center; gap: 12px; }
+.cat-ico { width: 1.7em; height: 1.7em; border-radius: 28%; display: grid; place-items: center; flex: none; box-shadow: inset 0 1px 0 #ffffff55, 0 4px 12px #0007; }
+.cat-ico svg { width: 62%; height: 62%; }
+.grid {
+    display: grid; gap: clamp(12px, 1.4vw, 24px);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.app-tile {
+    min-width: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center;
+    column-gap: clamp(14px, 1.6vw, 28px); row-gap: 4px; text-align: left;
+    min-height: clamp(130px, 13vw, 210px);
+    padding: clamp(16px, 1.6vw, 28px);
+    border-radius: clamp(22px, 2vw, 32px);
+    background: var(--surface);
+    transition: background-color .2s, transform .2s, box-shadow .2s;
+    scroll-margin: 100px 0 40px;
+}
+.app-tile:hover, .app-tile:focus-visible { background: var(--surface-hi); transform: scale(1.03); }
+.app-tile > .app-icon { grid-row: 1 / span 3; }
+.app-tile > span { grid-column: 2; }
+.app-tile:focus-visible { outline: none; box-shadow: 0 0 0 4px var(--orange), 0 0 0 8px #ffad7533, 0 18px 40px #000a; }
+.app-icon {
+    width: clamp(88px, 9vw, 160px); aspect-ratio: 1; border-radius: 24%;
+    object-fit: contain; background: #151217; box-shadow: 0 10px 24px #0008;
+}
+.title-app { font-weight: 700; font-size: clamp(1.05rem, 1.6vw, 1.6rem); line-height: 1.25; overflow-wrap: anywhere; }
+.download-count { color: var(--muted); font-size: clamp(.82rem, 1vw, 1rem); }
+.dl-hint { font-size: clamp(.82rem, 1vw, 1rem); font-weight: 700; color: var(--orange); opacity: .85; }
+
+/* ---------- Dialogs (floating glass panels) ---------- */
+dialog {
+    border: 0; padding: 0; background: transparent; color: var(--ink);
+    max-width: min(420px, calc(100vw - 32px)); width: 100%;
+}
+dialog::backdrop { background: #0009; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.panel { border-radius: 34px; padding: 26px; display: grid; gap: 16px; text-align: center; --glass-alpha: .72; cursor: default; }
+.panel h2 { margin: 0; font-size: 1.3rem; }
+.panel p { margin: 0; color: var(--muted); font-size: .92rem; }
+.qr {
+    width: min(260px, 70vw); aspect-ratio: 1; margin: 0 auto; border-radius: 22px;
+    background: #fff; padding: 12px; display: grid; place-items: center; color: #333; font-size: .85rem;
+}
+.qr img { width: 100%; height: 100%; object-fit: contain; }
+.contact-list { display: grid; gap: 10px; }
+.contact {
+    display: flex; align-items: center; gap: 14px; text-align: left;
+    padding: 12px 16px; border-radius: 20px; background: #ffffff12;
+}
+.contact:hover, .contact:focus-visible { background: #ffffff24; }
+.contact b { display: block; }
+.contact span { color: var(--muted); font-size: .88rem; }
+.brand-ico { width: 44px; height: 44px; flex: none; }
+.close { padding: 12px; font-weight: 700; }
+
+.download-toast {
+    position: fixed; z-index: 6; left: 50%; transform: translateX(-50%);
+    bottom: max(20px, env(safe-area-inset-bottom));
+    padding: 13px 24px; font-weight: 600; max-width: calc(100% - 32px); --glass-alpha: .72; cursor: default;
+}
+
+@media (max-width: 1100px) {
+    .toolbar { grid-template-columns: auto minmax(0, 1fr); }
+    .store-title { display: none; }
+    .tagline { display: block; }
+    .brand { font-size: 1.45rem; gap: 12px; }
+    .brand svg { width: 52px; }
+    .tagline { font-size: .6em; margin-top: 2px; }
+}
+@media (max-width: 1000px) and (min-width: 701px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) {
+    .toolbar { grid-template-columns: minmax(0, 1fr); position: relative; }
+    .brand { justify-self: start; }
+    .actions { grid-row: 2; grid-column: 1 / -1; justify-self: stretch; justify-content: center; }
+    .action { flex: 1; justify-content: center; }
+    .grid { grid-template-columns: minmax(0, 1fr); }
+    .app-tile { min-height: 0; }
+}
+@media (prefers-reduced-transparency: reduce) {
+    .glass { background: #262129 !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+    .glass::before, .glass::after { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition: none !important; }
+    .app-tile:hover, .app-tile:focus-visible, .glass:active { transform: none; }
+}
+@media (forced-colors: active) {
+    .glass, .app-tile { border: 1px solid ButtonText; }
+    :focus-visible { outline-color: Highlight; }
+}
+</style>
 </head>
 <body>
 
-    <header class="toolbar">
-        <div class="brand glass"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#FF9A2E"/>
-      <stop offset="0.55" stop-color="#FF6A00"/>
-      <stop offset="1" stop-color="#F04800"/>
-    </linearGradient>
-    <linearGradient id="shine" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#fff" stop-opacity=".30"/>
-      <stop offset=".45" stop-color="#fff" stop-opacity="0"/>
-    </linearGradient>
-    <linearGradient id="star" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#FFF27A"/>
-      <stop offset="1" stop-color="#FFC400"/>
-    </linearGradient>
-    <filter id="drop" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#7a2300" flood-opacity=".35"/>
-    </filter>
-  </defs>
-  <rect x="24" y="24" width="464" height="464" rx="116" fill="url(#bg)"/>
-  <rect x="24" y="24" width="464" height="464" rx="116" fill="url(#shine)"/>
-  <!-- V for Việt -->
-  <path d="M136 150 L256 384 L376 150" fill="none" stroke="#fff" stroke-width="72"
-        stroke-linecap="round" stroke-linejoin="round" filter="url(#drop)"/>
-  <!-- gold star cradled in the V -->
-  <path filter="url(#drop)" fill="url(#star)"
-        d="M256.0 92.0 L270.3 132.3 L313.1 133.5 L279.1 159.5 L291.3 200.5 L256.0 176.3 L220.7 200.5 L232.9 159.5 L198.9 133.5 L241.7 132.3 Z"/>
-</svg><span>Việt Xiaomi <strong>Store</strong></span></div>
-        <nav class="category-nav glass" aria-label="Danh mục ứng dụng">
-            <a href="#cat-hot" class="nav-pill nav-pill-hot" id="nav-hot" style="display:none;">🔥 Hot</a>
-            <a href="#cat-phim" class="nav-pill">🎬 Xem Phim</a>
-            <a href="#cat-tv" class="nav-pill">📡 Truyền Hình</a>
-            <a href="#cat-youtube" class="nav-pill">▶️ YouTube</a>
-            <a href="#cat-dieukhien" class="nav-pill">🎙️ Trợ Lý Giọng Nói</a>
-            <a href="#cat-camera" class="nav-pill">📷 Camera An Ninh</a>
-            <a href="#cat-khac" class="nav-pill">🧰 Ứng Dụng Khác</a>
-        </nav>
-        <button type="button" class="fullscreen glass" id="fullscreen" aria-label="Toàn màn hình" aria-pressed="false" hidden>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/>
-            </svg>
+<header class="toolbar" id="toolbar">
+    <div class="brand"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
+      <defs>
+        <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF9A2E"/><stop offset="0.55" stop-color="#FF6A00"/><stop offset="1" stop-color="#F04800"/></linearGradient>
+        <linearGradient id="shine" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".30"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/></linearGradient>
+        <linearGradient id="star" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF27A"/><stop offset="1" stop-color="#FFC400"/></linearGradient>
+        <filter id="drop" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#7a2300" flood-opacity=".35"/></filter>
+      </defs>
+      <rect x="24" y="24" width="464" height="464" rx="116" fill="url(#bg)"/>
+      <rect x="24" y="24" width="464" height="464" rx="116" fill="url(#shine)"/>
+      <path d="M136 150 L256 384 L376 150" fill="none" stroke="#fff" stroke-width="72" stroke-linecap="round" stroke-linejoin="round" filter="url(#drop)"/>
+      <path filter="url(#drop)" fill="url(#star)" d="M256.0 92.0 L270.3 132.3 L313.1 133.5 L279.1 159.5 L291.3 200.5 L256.0 176.3 L220.7 200.5 L232.9 159.5 L198.9 133.5 L241.7 132.3 Z"/>
+    </svg><span class="brand-text"><span>Việt Xiaomi <strong>Store</strong></span><small class="tagline">Kho app miễn phí cho Android TV</small></span></div>
+
+    <p class="store-title">Kho ứng dụng miễn phí <span>cho Android TV</span></p>
+
+    <div class="actions">
+        <button type="button" class="glass action action-support" data-open="dlg-support">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.2 4.3 2.4.7-1.2 2.2-2.4 4.3-2.4 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg>
+            Ủng hộ
         </button>
-    </header>
+        <button type="button" class="glass action" data-open="dlg-contact">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+            Liên hệ
+        </button>
+        <button type="button" class="glass fullscreen" id="fullscreen" aria-label="Toàn màn hình" hidden>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></svg>
+    </button>
+    </div>
 
-    <main class="layout">
-        <section class="hero" aria-labelledby="store-heading">
-            <div>
-                <h1 id="store-heading">Kho ứng dụng miễn phí</h1>
-                <p class="hero-category" id="hero-category">Android TV</p>
-                <h2 class="hero-title" id="hero-title" hidden></h2>
-                <p class="hero-support">Hỗ trợ cài đặt · <a href="tel:+84343220893">0343.22.08.93</a></p>
-            </div>
-            <div class="hero-art">
-                <img class="hero-icon" id="hero-icon" src="icons/app-ytb.png" alt="" hidden>
-            </div>
-        </section>
-        <div class="catalog">
+</header>
 
+<main class="layout" id="catalog"></main>
 
-    <section class="category-section hot-section" id="cat-hot" style="display:none;">
-        <h2 class="category-title">🔥 Ứng Dụng Hot</h2>
-        <div class="grid-container" id="hot-grid"></div>
-    </section>
+<dialog id="dlg-support" aria-labelledby="t-support">
+    <div class="panel glass">
+        <h2 id="t-support">Ủng hộ Việt Xiaomi</h2>
+        <div class="qr"><img src="icons/qr-ungho.png" alt="Mã QR ủng hộ" onerror="this.replaceWith('Đặt ảnh QR vào icons/qr-ungho.png')"></div>
+        <p>Quét mã bằng app ngân hàng. Cảm ơn bạn đã ủng hộ!</p>
+        <button type="button" class="glass close" data-close>Đóng</button>
+    </div>
+</dialog>
 
-	<section class="category-section" id="cat-youtube">
-        <h2 class="category-title">▶️ YouTube</h2>
-        <div class="grid-container">
-            <div class="apk-card app-ytb">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-ytb.png" alt="" loading="lazy">
-                    <span class="title-app">YouTubeTV Nội Địa</span>
-                </div>
-                <a href="ytb.apk" class="btn-download" download>Tải Về</a>
-            </div>
-
-            <div class="apk-card app-googletv-ytb">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-googletv-ytb.png" alt="" loading="lazy">
-                    <span class="title-app">YouTube Tizen</span>
-                </div>
-                <a href="ytb2.apk" class="btn-download" download>Tải Về</a>
-            </div>
-			
-			<div class="apk-card app-karaoke">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-karaoke.png" alt="" loading="lazy">
-                    <span class="title-app">VXM Karaoke</span>
-                </div>
-                <a href="karaoke.apk" class="btn-download" download>Tải Về</a>
-            </div>
-			
-			<div class="apk-card app-ytbfix">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-googletv-ytb.png" alt="" loading="lazy">
-                    <span class="title-app">YouTube Fix RAM Yếu</span>
-                </div>
-                <a href="tizen.apk" class="btn-download" download>Tải Về</a>
-            </div>
-
-            <div class="apk-card app-smarttube">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-smarttube.png" alt="" loading="lazy">
-                    <span class="title-app">SmartTube Stable</span>
-                </div>
-                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/smarttube.apk" class="btn-download" download>Tải Về</a>
-            </div>
-			
-			<div class="apk-card app-tiktok-lite">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-tiktok-lite.png" alt="" loading="lazy">
-                    <span class="title-app">TikTok Lite</span>
-                </div>
-                <a href="tiktok.apk" class="btn-download" download>Tải Về</a>
-            </div>
+<dialog id="dlg-contact" aria-labelledby="t-contact">
+    <div class="panel glass">
+        <h2 id="t-contact">Liên hệ hỗ trợ cài đặt</h2>
+        <div class="contact-list">
+            <a class="contact" href="tel:+84343220893">
+                <svg class="brand-ico" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#34c759"/><path fill="#fff" d="M18.6 12.4c-.6-1.3-2-1.9-3.3-1.4l-2.8 1c-1.3.5-2.1 1.8-2 3.2.5 6.6 3.3 12.8 8 17.5s10.9 7.5 17.5 8c1.4.1 2.7-.7 3.2-2l1-2.8c.5-1.3-.1-2.7-1.4-3.3l-4.7-2.2c-1.1-.5-2.4-.2-3.2.7l-1.7 2c-3.6-1.7-6.6-4.7-8.3-8.3l2-1.7c.9-.8 1.2-2.1.7-3.2l-2.2-4.7z"/></svg>
+                <div><b>Điện thoại</b><span>0343.22.08.93</span></div></a>
+            <a class="contact" href="https://zalo.me/0343220893" target="_blank" rel="noopener">
+                <svg class="brand-ico" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#0068ff"/><path fill="#fff" d="M24 8C14.1 8 6 14.6 6 22.8c0 4.6 2.6 8.8 6.6 11.5L11 40.5l7.1-3.7c1.9.5 3.9.8 5.9.8 9.9 0 18-6.6 18-14.8S33.9 8 24 8z"/><text x="24" y="27.6" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="10.5" fill="#0068ff">Zalo</text></svg>
+                <div><b>Zalo</b><span>0343.22.08.93</span></div></a>
+            <a class="contact" href="https://fb.com/vietxiaomi93" target="_blank" rel="noopener">
+                <svg class="brand-ico" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="24" fill="#0866ff"/><path fill="#fff" d="M26.6 48V31h5.4l.9-6.6h-6.3v-4.2c0-1.9.5-3.2 3.3-3.2h3.3v-5.9c-.6-.1-2.6-.3-4.9-.3-4.8 0-8.1 2.9-8.1 8.4v5.2h-5.4V31h5.4v17z"/></svg>
+                <div><b>Facebook</b><span>fb.com/vietxiaomi93</span></div></a>
         </div>
-    </section>
-	
-    <section class="category-section" id="cat-phim">
-        <h2 class="category-title">🎬 Xem Phim</h2>
-        <div class="grid-container">
-            <div class="apk-card app-ximaofilm">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-ximaofilm.png" alt="" loading="lazy">
-                    <span class="title-app">Ximao Film</span>
-                </div>
-                <a href="ximaofilm.apk" class="btn-download" download>Tải Về</a>
-            </div>
-			
-			<div class="apk-card app-phim4k">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-phim4k.png" alt="" loading="lazy">
-                    <span class="title-app">Phim4K</span>
-                </div>
-                <a href="phim4k.apk" class="btn-download" download>Tải Về</a>
-            </div>
+        <button type="button" class="glass close" data-close>Đóng</button>
+    </div>
+</dialog>
 
-            <div class="apk-card app-chophim">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-chophim.png" alt="" loading="lazy">
-                    <span class="title-app">Chợ Phim</span>
-                </div>
-                <a href="chophim.apk" class="btn-download" download>Tải Về</a>
-            </div>
+<div class="download-toast glass" role="status" id="download-toast" hidden></div>
 
-            <div class="apk-card app-NVC">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-NVC.png" alt="" loading="lazy">
-                    <span class="title-app">NVC Phim</span>
-                </div>
-                <a href="NVC.apk" class="btn-download" download>Tải Về</a>
-            </div>
+<script>
+(function () {
+    var GH = 'https://media.githubusercontent.com/media/ximaotv/khoapp/main/';
+    var CATS = [
+        ['cat-youtube', 'YouTube', [
+            ['YouTubeTV Nội Địa', 'app-ytb', 'ytb.apk'],
+            ['YouTube Tizen', 'app-googletv-ytb', 'ytb2.apk'],
+            ['VXM Karaoke', 'app-karaoke', 'karaoke.apk'],
+            ['YouTube Fix RAM Yếu', 'app-googletv-ytb', 'tizen.apk'],
+            ['SmartTube Stable', 'app-smarttube', GH + 'smarttube.apk'],
+            ['TikTok Lite', 'app-tiktok-lite', 'tiktok.apk']]],
+        ['cat-phim', 'Xem Phim', [
+            ['Ximao Film', 'app-ximaofilm', 'ximaofilm.apk'],
+            ['Phim4K', 'app-phim4k', 'phim4k.apk'],
+            ['Chợ Phim', 'app-chophim', 'chophim.apk'],
+            ['NVC Phim', 'app-NVC', 'NVC.apk'],
+            ['Sài Gòn Phim', 'app-saigonphim', 'sgphim.apk'],
+            ['Rạp Phim', 'app-rapphim', 'rapphim.apk'],
+            ['Netflix (Yêu cầu dùng chuột)', 'app-netflix', 'netflix.apk'],
+            ['HBO Max', 'app-hbomax', GH + 'hbomax.apk']]],
+        ['cat-tv', 'Truyền Hình', [
+            ['VietMITV', 'app-vietmitv', 'vietmitv.apk'],
+            ['QuanTV', 'app-quantv', 'quantv.apk'],
+            ['VietPlayTV', 'app-vietplaytv', 'vietplaytv.apk'],
+            ['VAppTV', 'app-vapptv', 'vapp.apk'],
+            ['FPT Play', 'app-fptplay', GH + 'fptplay14.apk'],
+            ['TV360', 'app-tv360', GH + 'tv360.apk'],
+            ['VTV Go', 'app-vtvgo', GH + 'vtvgo.apk'],
+            ['VTV Prime', 'app-vtvprime', GH + 'vtvprime.apk'],
+            ['MyTV', 'app-mytv', GH + 'mytv.apk'],
+            ['Sport Stream', 'app-sport-stream', 'sportstream.apk'],
+            ['Get Out', 'app-get-out', 'getout.apk']]],
+        ['cat-dieukhien', 'Trợ Lý Giọng Nói', [
+            ['MapVoice', 'app-mapvoice', 'mapvoice.apk'],
+            ['Super Voice', 'app-supervoice', 'supervoice.apk'],
+            ['Google Voice', 'app-voice', 'voice.apk'],
+            ['Giọng nói Kiki', 'app-kiki', 'kiki.apk']]],
+        ['cat-camera', 'Camera An Ninh', [
+            ['Imou Camera', 'app-imou', GH + 'imou.apk'],
+            ['Yoosee Camera', 'app-yoosee', GH + 'yoosee.apk'],
+            ['EZVIZ Camera', 'app-ezviz', GH + 'ezviz.apk'],
+            ['HIK Camera', 'app-hik', GH + 'hik.apk']]],
+        ['cat-khac', 'Ứng Dụng Khác', [
+            ['Việt Xiaomi Store', 'app-vxm', 'vxmstore.apk'],
+            ['MiX Silver', 'app-mix', 'mix.apk'],
+            ['Permission Manager by VXM', 'app-permission', 'permission.apk'],
+            ['MStore2', 'app-mstore2', 'mstore.apk'],
+            ['Ferrari Downloader', 'app-ferrari', 'ferrari.apk'],
+            ['Trình duyệt TV Bro', 'app-tvbro', GH + 'tvbro.apk'],
+            ['Trình duyệt Cốc Cốc TV', 'app-coccoc', GH + 'coccoc.apk'],
+            ['Projectivy Launcher', 'app-project', 'project.apk'],
+            ['Cài đặt Android 11', 'app-settings', 'settings.apk'],
+            ['VXM Manager', 'app-manager', 'manager.apk']]]
+    ];
 
-            <div class="apk-card app-saigonphim">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-saigonphim.png" alt="" loading="lazy">
-                    <span class="title-app">Sài Gòn Phim</span>
-                </div>
-                <a href="sgphim.apk" class="btn-download" download>Tải Về</a>
-            </div>
+    var CAT_ICONS = {
+        'cat-hot': ['linear-gradient(135deg,#ff9a2e,#f04800)', '<path d="M12 22c4 0 7-2.7 7-6.8 0-4.2-3.2-6.4-4.2-10.2-2.3 1.6-3.3 3.6-3.3 5.6-1.3-.8-2-2.2-2-3.6C7 9 5 11.6 5 15.2 5 19.3 8 22 12 22z" fill="#fff" stroke="none"/>'],
+        'cat-youtube': ['#ff0033', '<rect x="2.5" y="5" width="19" height="14" rx="4" fill="#fff" stroke="none"/><path d="M10 9v6l5-3z" fill="#ff0033" stroke="none"/>'],
+        'cat-phim': ['linear-gradient(135deg,#8b5cf6,#5b21b6)', '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4"/>'],
+        'cat-tv': ['linear-gradient(135deg,#22c3ee,#0369a1)', '<rect x="2.5" y="7" width="19" height="13" rx="2"/><path d="M8 3l4 4 4-4"/>'],
+        'cat-dieukhien': ['linear-gradient(135deg,#34d399,#047857)', '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>'],
+        'cat-camera': ['linear-gradient(135deg,#f87171,#b91c1c)', '<path d="M3 7h3l2-3h8l2 3h3v12H3z"/><circle cx="12" cy="13" r="3.5"/>'],
+        'cat-khac': ['linear-gradient(135deg,#94a3b8,#475569)', '<rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/>']
+    };
+    var API = 'https://viet-xiaomi-tv-download.viet-ng228.workers.dev/app-downloads';
+    var DEDUPE_TIME = 30 * 60 * 1000, REQUEST_TIMEOUT = 6000, HOT_COUNT = 8;
+    var fmt = new Intl.NumberFormat('vi-VN');
+    var store = {
+        get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+        set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+    };
+    var visitorId = store.get('ximaotv-download-visitor');
+    if (!visitorId) { visitorId = uuid(); store.set('ximaotv-download-visitor', visitorId); }
 
-            <div class="apk-card app-rapphim">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-rapphim.png" alt="" loading="lazy">
-                    <span class="title-app">Rạp Phim</span>
-                </div>
-                <a href="rapphim.apk" class="btn-download" download>Tải Về</a>
-            </div>
+    var catalog = document.getElementById('catalog');
+    var toast = document.getElementById('download-toast');
+    var toastTimer;
+    var entries = [];
 
-            <div class="apk-card app-netflix">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-netflix.png" alt="" loading="lazy">
-                    <span class="title-app">Netflix (Yêu cầu dùng chuột)</span>
-                </div>
-                <a href="netflix.apk" class="btn-download" download>Tải Về</a>
-            </div>
+    function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; return e; }
 
-            <div class="apk-card app-hbomax">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-hbomax.png" alt="" loading="lazy">
-                    <span class="title-app">HBO Max</span>
-                </div>
-                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/hbomax.apk" class="btn-download" download>Tải Về</a>
-            </div>
-        </div>
-    </section>
+    function makeTile(app) {
+        var url = new URL(app[2], location.href);
+        var file = decodeURIComponent(url.pathname.split('/').pop());
+        var key = file.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        var a = el('a', 'app-tile');
+        a.href = url.href; a.setAttribute('download', file);
+        a.setAttribute('aria-label', 'Tải về ' + app[0]);
+        var img = el('img', 'app-icon'); img.src = 'icons/' + app[1] + '.png'; img.alt = ''; img.loading = 'lazy';
+        var count = el('span', 'download-count', 'Đang tải số lượt...');
+        a.append(img, el('span', 'title-app', app[0]), count, el('span', 'dl-hint', '⬇ Bấm để tải'));
+        return { a: a, key: key, url: url.href, file: file, name: app[0], icon: app[1], count: count, n: 0 };
+    }
 
-    <section class="category-section" id="cat-tv">
-        <h2 class="category-title">📡 Truyền Hình</h2>
-        <div class="grid-container">
-			<div class="apk-card app-vietmitv">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-vietmitv.png" alt="" loading="lazy">
-                    <span class="title-app">VietMITV</span>
-                </div>
-                <a href="vietmitv.apk" class="btn-download" download>Tải Về</a>
-            </div>
-			
-            <div class="apk-card app-quantv">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-quantv.png" alt="" loading="lazy">
-                    <span class="title-app">QuanTV</span>
-                </div>
-                <a href="quantv.apk" class="btn-download" download>Tải Về</a>
-            </div>
+    function section(id, title) {
+        var s = el('section', 'category-section'); s.id = id;
+        var h = el('h2', 'category-title'), ic = CAT_ICONS[id];
+        h.innerHTML = '<span class="cat-ico" style="background:' + ic[0] + '"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + ic[1] + '</svg></span>';
+        h.append(title);
+        s.append(h);
+        var g = el('div', 'grid'); s.append(g);
+        catalog.append(s);
+        return g;
+    }
 
-            <div class="apk-card app-vietplaytv">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-vietplaytv.png" alt="" loading="lazy">
-                    <span class="title-app">VietPlayTV</span>
-                </div>
-                <a href="vietplaytv.apk" class="btn-download" download>Tải Về</a>
-            </div>
+    CATS.forEach(function (cat) {
+        var grid = section(cat[0], cat[1]);
+        cat[2].forEach(function (app) {
+            var t = makeTile(app); entries.push(t); grid.append(t.a); bind(t, t.count, t.a);
+        });
+    });
 
-            <div class="apk-card app-vapptv">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-vapptv.png" alt="" loading="lazy">
-                    <span class="title-app">VAppTV</span>
-                </div>
-                <a href="vapp.apk" class="btn-download" download>Tải Về</a>
-            </div>
+    function bind(entry, countEl, tile) {
+        tile.addEventListener('click', function (ev) {
+            ev.preventDefault();
+            var d = document.createElement('a'); d.href = entry.url; d.download = entry.file;
+            document.body.append(d); d.click(); d.remove();
+            toast.textContent = 'Đang tải ' + entry.name + '…';
+            toast.hidden = false; clearTimeout(toastTimer);
+            toastTimer = setTimeout(function () { toast.hidden = true; }, 4000);
 
-			<div class="apk-card app-fptplay">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-fptplay.png" alt="" loading="lazy">
-                    <span class="title-app">FPT Play</span>
-                </div>
-                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/fptplay14.apk" class="btn-download" download>Tải Về</a>
-            </div>
-			
-            <div class="apk-card app-tv360">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-tv360.png" alt="" loading="lazy">
-                    <span class="title-app">TV360</span>
-                </div>
-                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/tv360.apk" class="btn-download" download>Tải Về</a>
-            </div>
-
-            <div class="apk-card app-vtvgo">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-vtvgo.png" alt="" loading="lazy">
-                    <span class="title-app">VTV Go</span>
-                </div>
-                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/vtvgo.apk" class="btn-download" download>Tải Về</a>
-            </div>
-
-            <div class="apk-card app-vtvprime">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-vtvprime.png" alt="" loading="lazy">
-                    <span class="title-app">VTV Prime</span>
-                </div>
-                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/vtvprime.apk" class="btn-download" download>Tải Về</a>
-            </div>
-
-            <div class="apk-card app-mytv">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-mytv.png" alt="" loading="lazy">
-                    <span class="title-app">MyTV</span>
-                </div>
-                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/mytv.apk" class="btn-download" download>Tải Về</a>
-            </div>
-
-            <div class="apk-card app-sport-stream">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-sport-stream.png" alt="" loading="lazy">
-                    <span class="title-app">Sport Stream</span>
-                </div>
-                <a href="sportstream.apk" class="btn-download" download>Tải Về</a>
-            </div>
-
-            <div class="apk-card app-get-out">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-get-out.png" alt="" loading="lazy">
-                    <span class="title-app">Get Out</span>
-                </div>
-                <a href="getout.apk" class="btn-download" download>Tải Về</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="category-section" id="cat-dieukhien">
-        <h2 class="category-title">🎙️ Trợ Lý Giọng Nói</h2>
-        <div class="grid-container">
-            <div class="apk-card app-mapvoice">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-mapvoice.png" alt="" loading="lazy">
-                    <span class="title-app">MapVoice</span>
-                </div>
-                <a href="mapvoice.apk" class="btn-download" download>Tải Về</a>
-            </div>
-
-            <div class="apk-card app-supervoice">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-supervoice.png" alt="" loading="lazy">
-                    <span class="title-app">Super Voice</span>
-                </div>
-                <a href="supervoice.apk" class="btn-download" download>Tải Về</a>
-            </div>
-			
-			<div class="apk-card app-voice">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-voice.png" alt="" loading="lazy">
-                    <span class="title-app">Google Voice</span>
-                </div>
-                <a href="voice.apk" class="btn-download" download>Tải Về</a>
-            </div>
-
-            <div class="apk-card app-kiki">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-kiki.png" alt="" loading="lazy">
-                    <span class="title-app">Giọng nói Kiki</span>
-                </div>
-                <a href="kiki.apk" class="btn-download" download>Tải Về</a>
-            </div>
-
-    </section>
-
-    <section class="category-section" id="cat-camera">
-        <h2 class="category-title">📷 Camera An Ninh</h2>
-        <div class="grid-container">
-            <div class="apk-card app-imou">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-imou.png" alt="" loading="lazy">
-                    <span class="title-app">Imou Camera</span>
-                </div>
-                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/imou.apk" class="btn-download" download>Tải Về</a>
-            </div>
-
-            <div class="apk-card app-yoosee">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-yoosee.png" alt="" loading="lazy">
-                    <span class="title-app">Yoosee Camera</span>
-                </div>
-                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/yoosee.apk" class="btn-download" download>Tải Về</a>
-            </div>
-
-            <div class="apk-card app-ezviz">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-ezviz.png" alt="" loading="lazy">
-                    <span class="title-app">EZVIZ Camera</span>
-                </div>
-                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/ezviz.apk" class="btn-download" download>Tải Về</a>
-            </div>
-			
-			<div class="apk-card app-hik">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-hik.png" alt="" loading="lazy">
-                    <span class="title-app">HIK Camera</span>
-                </div>
-                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/hik.apk" class="btn-download" download>Tải Về</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="category-section" id="cat-khac">
-        <h2 class="category-title">🧰 Ứng Dụng Khác</h2>
-        <div class="grid-container">
-            <div class="apk-card app-vxm-store">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-vxm.png" alt="" loading="lazy">
-                    <span class="title-app">Việt Xiaomi Store</span>
-                </div>
-                <a href="vxmstore.apk" class="btn-download" download>Tải Về</a>
-            </div>
-			
-			<div class="apk-card app-mix">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-mix.png" alt="" loading="lazy">
-                    <span class="title-app">MiX Silver</span>
-                </div>
-                <a href="mix.apk" class="btn-download" download>Tải Về</a>
-            </div>
-			
-			<div class="apk-card app-permission">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-permission.png" alt="" loading="lazy">
-                    <span class="title-app">Permission Manager by VXM</span>
-                </div>
-                <a href="permission.apk" class="btn-download" download>Tải Về</a>
-            </div>
-
-            <div class="apk-card app-mstore2">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-mstore2.png" alt="" loading="lazy">
-                    <span class="title-app">MStore2</span>
-                </div>
-                <a href="mstore.apk" class="btn-download" download>Tải Về</a>
-            </div>
-			
-			<div class="apk-card app-ferrari">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-ferrari.png" alt="" loading="lazy">
-                    <span class="title-app">Ferrari Downloader</span>
-                </div>
-                <a href="ferrari.apk" class="btn-download" download>Tải Về</a>
-            </div>
-
-            <div class="apk-card app-tvbro">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-tvbro.png" alt="" loading="lazy">
-                    <span class="title-app">Trình duyệt TV Bro</span>
-                </div>
-                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/tvbro.apk" class="btn-download" download>Tải Về</a>
-            </div>
-
-            <div class="apk-card app-coccoc">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-coccoc.png" alt="" loading="lazy">
-                    <span class="title-app">Trình duyệt Cốc Cốc TV</span>
-                </div>
-                <a href="https://media.githubusercontent.com/media/ximaotv/khoapp/main/coccoc.apk" class="btn-download" download>Tải Về</a>
-            </div>
-			
-			<div class="apk-card app-project">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-project.png" alt="" loading="lazy">
-                    <span class="title-app">Projectivy Launcher</span>
-                </div>
-                <a href="project.apk" class="btn-download" download>Tải Về</a>
-            </div>
-						
-			<div class="apk-card app-settings">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-settings.png" alt="" loading="lazy">
-                    <span class="title-app">Cài đặt Android 11</span>
-                </div>
-                <a href="settings.apk" class="btn-download" download>Tải Về</a>
-            </div>
-			
-			<div class="apk-card app-manager">
-                <div class="apk-info">
-                    <img class="app-icon" src="icons/app-manager.png" alt="" loading="lazy">
-                    <span class="title-app">VXM Manager</span>
-                </div>
-                <a href="manager.apk" class="btn-download" download>Tải Về</a>
-            </div>
-        </div>
-    </section>
-
-        </div>
-    </main>
-    <div class="download-toast glass" role="status" id="download-toast" hidden></div>
-
-    <script>
-        (function () {
-            var API = 'https://viet-xiaomi-tv-download.viet-ng228.workers.dev/app-downloads';
-            var DEDUPE_TIME = 30 * 60 * 1000;
-            var REQUEST_TIMEOUT = 6000;
-            var HOT_COUNT = 8;
-            var numberFormat = new Intl.NumberFormat('vi-VN');
-            var visitorKey = 'ximaotv-download-visitor';
-            var visitorId = localStorage.getItem(visitorKey);
-
-            if (!visitorId) {
-                visitorId = generateUUID();
-                localStorage.setItem(visitorKey, visitorId);
-            }
-
-
-            var catalog = document.querySelector('.catalog');
-            var heroCategory = document.getElementById('hero-category');
-            var heroTitle = document.getElementById('hero-title');
-            var heroIcon = document.getElementById('hero-icon');
-            var toast = document.getElementById('download-toast');
-            var toastTimer;
-
-            function previewApp(card) {
-                var section = card.closest('.category-section');
-                heroCategory.textContent = section.querySelector('.category-title').textContent.trim();
-                heroTitle.textContent = card.querySelector('.title-app').textContent.trim();
-                heroIcon.src = card.querySelector('.app-icon').src;
-                heroIcon.hidden = false;
-                heroTitle.hidden = false;
-            }
-
-            catalog.addEventListener('focusin', function (event) {
-                var card = event.target.closest('.apk-card');
-                if (!card) return;
-                previewApp(card);
-                updateOffsets();
-                var offset = parseFloat(root.style.getPropertyValue('--focus-offset'));
-                var top = event.target.getBoundingClientRect().top;
-                if (top < offset) window.scrollBy(0, top - offset);
-            });
-            catalog.addEventListener('mouseover', function (event) {
-                var card = event.target.closest('.apk-card');
-                if (card && !card.contains(event.relatedTarget)) previewApp(card);
-            });
-
-            catalog.addEventListener('keydown', function (event) {
-                var button = event.target.closest('.btn-download');
-                var direction = { ArrowLeft: [-1, 0], ArrowRight: [1, 0],
-                    ArrowUp: [0, -1], ArrowDown: [0, 1] }[event.key];
-                if (!button || !direction || event.altKey || event.ctrlKey || event.metaKey) return;
-                var origin = button.getBoundingClientRect();
-                var best = null;
-                var bestScore = Infinity;
-                var buttons = catalog.querySelectorAll('.btn-download');
-                for (var i = 0; i < buttons.length; i++) {
-                    var candidate = buttons[i];
-                    if (!candidate.getClientRects().length) continue;
-                    var rect = candidate.getBoundingClientRect();
-                    var dx = (rect.left + rect.right - origin.left - origin.right) / 2;
-                    var dy = (rect.top + rect.bottom - origin.top - origin.bottom) / 2;
-                    var primary = dx * direction[0] + dy * direction[1];
-                    var cross = Math.abs(dx * direction[1] + dy * direction[0]);
-                    if (primary <= 8 || (direction[0] && cross > origin.height)) continue;
-                    var score = primary + cross * 2;
-                    if (score < bestScore) {
-                        best = candidate;
-                        bestScore = score;
-                    }
-                }
-                if (best) {
-                    event.preventDefault();
-                    best.focus();
-                }
-            });
-
-            function showDownload(button) {
-                var card = button.closest('.apk-card');
-                previewApp(card);
-                toast.textContent = 'Đã yêu cầu tải ' + card.querySelector('.title-app').textContent.trim();
-                toast.hidden = false;
-                clearTimeout(toastTimer);
-                toastTimer = setTimeout(function () { toast.hidden = true; }, 5000);
-            }
-            previewApp(catalog.querySelector('.apk-card'));
-
-            var toolbar = document.querySelector('.toolbar');
-            var hero = document.querySelector('.hero');
-            var root = document.documentElement;
-            var fullscreen = document.getElementById('fullscreen');
-
-            function updateOffsets() {
-                var toolbarHeight = toolbar.offsetHeight;
-                var stickyHeroHeight = getComputedStyle(hero).position === 'sticky' ? hero.offsetHeight : 0;
-                root.style.setProperty('--toolbar-height', toolbarHeight + 'px');
-                root.style.setProperty('--focus-offset', (toolbarHeight + stickyHeroHeight + 12) + 'px');
-            }
-            window.addEventListener('resize', updateOffsets);
-            if (typeof ResizeObserver !== 'undefined') {
-                var resizeObserver = new ResizeObserver(updateOffsets);
-                resizeObserver.observe(toolbar);
-                resizeObserver.observe(hero);
-            }
-            updateOffsets();
-
-            if (document.fullscreenEnabled && root.requestFullscreen) {
-                fullscreen.hidden = false;
-                fullscreen.addEventListener('click', function () {
-                    var operation = document.fullscreenElement ? document.exitFullscreen() : root.requestFullscreen();
-                    operation.catch(function () {});
-                });
-                document.addEventListener('fullscreenchange', function () {
-                    var active = Boolean(document.fullscreenElement);
-                    fullscreen.setAttribute('aria-pressed', String(active));
-                    fullscreen.setAttribute('aria-label', active ? 'Thoát toàn màn hình' : 'Toàn màn hình');
-                });
-            }
-
-
-            function generateUUID() {
-                if (window.crypto && typeof window.crypto.randomUUID === 'function') {
-                    try { return window.crypto.randomUUID(); } catch (e) {}
-                }
-                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                    var r = Math.random() * 16 | 0;
-                    var v = c === 'x' ? r : (r & 0x3 | 0x8);
-                    return v.toString(16);
-                });
-            }
-
-            function fetchWithTimeout(url, options, timeout) {
-                if (typeof AbortController === 'undefined') {
-                    return fetch(url, options);
-                }
-                var controller = new AbortController();
-                var timer = setTimeout(function () { controller.abort(); }, timeout);
-                var opts = {};
-                for (var k in options) { if (options.hasOwnProperty(k)) opts[k] = options[k]; }
-                opts.signal = controller.signal;
-                return fetch(url, opts).then(function (response) {
-                    clearTimeout(timer);
-                    return response;
-                }, function (error) {
-                    clearTimeout(timer);
-                    throw error;
-                });
-            }
-
-            function bindDownloadButton(button, key, url, file, countEl) {
-                button.addEventListener('click', function (event) {
-                    event.preventDefault();
-
-
-                    var download = document.createElement('a');
-                    download.href = url;
-                    download.download = file;
-                    document.body.appendChild(download);
-                    download.click();
-                    download.remove();
-                    showDownload(button);
-
-                    var storageKey = 'ximaotv-download:' + key;
-                    var lastCounted = Number(localStorage.getItem(storageKey) || 0);
-                    if (Date.now() - lastCounted < DEDUPE_TIME) return;
-
-                    fetchWithTimeout(API + '/' + key, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ visitorId: visitorId })
-                    }, REQUEST_TIMEOUT).then(function (response) {
-                        if (!response.ok) throw new Error('Counter unavailable');
-                        return response.json();
-                    }).then(function (data) {
-                        var c = (data && typeof data.count !== 'undefined') ? Number(data.count) : 0;
-                        countEl.textContent = numberFormat.format(c || 0) + ' lượt tải';
-                        localStorage.setItem(storageKey, String(Date.now()));
-                    }).catch(function () {
-
-                    });
-                });
-            }
-
-            var entries = [];
-            var cards = document.querySelectorAll('.category-section:not(.hot-section) .apk-card');
-            for (var i = 0; i < cards.length; i++) {
-                (function (card) {
-                    var button = card.querySelector('.btn-download');
-                    var url = new URL(button.href, location.href);
-                    var file = decodeURIComponent(url.pathname.split('/').pop());
-                    var key = file.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-                    var count = document.createElement('span');
-
-                    count.className = 'download-count';
-                    count.textContent = 'Đang tải số lượt...';
-                    card.querySelector('.apk-info').appendChild(count);
-                    bindDownloadButton(button, key, url.href, file, count);
-
-                    entries.push({ key: key, url: url.href, file: file, card: card, count: count });
-                })(cards[i]);
-            }
-
-            fetchWithTimeout(API, {}, REQUEST_TIMEOUT)
-                .then(function (response) {
-                    if (!response.ok) throw new Error('Counter unavailable');
-                    return response.json();
-                })
+            var sk = 'ximaotv-download:' + entry.key;
+            if (Date.now() - Number(store.get(sk) || 0) < DEDUPE_TIME) return;
+            fetchT(API + '/' + entry.key, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ visitorId: visitorId }) })
+                .then(function (r) { if (!r.ok) throw 0; return r.json(); })
                 .then(function (data) {
-                    var counts = (data && data.counts) ? data.counts : {};
-                    for (var i = 0; i < entries.length; i++) {
-                        var entry = entries[i];
-                        var c = counts[entry.key] ? Number(counts[entry.key]) : 0;
-                        entry.count.textContent = numberFormat.format(c || 0) + ' lượt tải';
-                        entry.downloadCount = c || 0;
-                    }
-                    buildHotSection();
-                })
-                .catch(function () {
-                    for (var i = 0; i < entries.length; i++) entries[i].count.textContent = 'Chưa có dữ liệu lượt tải';
-                });
+                    countEl.textContent = fmt.format(Number(data && data.count) || 0) + ' lượt tải';
+                    store.set(sk, String(Date.now()));
+                }).catch(function () {});
+        });
+    }
 
-            function buildHotSection() {
-                var hotEntries = entries
-                    .filter(function (entry) { return entry.downloadCount > 0; })
-                    .sort(function (a, b) { return b.downloadCount - a.downloadCount; })
-                    .slice(0, HOT_COUNT);
+    fetchT(API, {}).then(function (r) { if (!r.ok) throw 0; return r.json(); })
+        .then(function (data) {
+            var counts = (data && data.counts) || {};
+            entries.forEach(function (e) { e.n = Number(counts[e.key]) || 0; e.count.textContent = fmt.format(e.n) + ' lượt tải'; });
+            var hot = entries.filter(function (e) { return e.n > 0; }).sort(function (a, b) { return b.n - a.n; }).slice(0, HOT_COUNT);
+            if (!hot.length) return;
+            var grid = section('cat-hot', 'Ứng Dụng Hot');
+            catalog.prepend(grid.parentNode);
+            hot.forEach(function (e) {
+                var t = makeTile([e.name, e.icon, e.url]);
+                t.count.textContent = e.count.textContent; grid.append(t.a); bind(e, t.count, t.a);
+            });
+        })
+        .catch(function () { entries.forEach(function (e) { e.count.textContent = 'Chưa có dữ liệu lượt tải'; }); });
 
-                if (hotEntries.length === 0) return;
+    function fetchT(url, opts) {
+        if (typeof AbortController === 'undefined') return fetch(url, opts);
+        var c = new AbortController(), t = setTimeout(function () { c.abort(); }, REQUEST_TIMEOUT);
+        opts.signal = c.signal;
+        return fetch(url, opts).then(function (r) { clearTimeout(t); return r; },
+                                     function (e) { clearTimeout(t); throw e; });
+    }
+    function uuid() {
+        if (window.crypto && crypto.randomUUID) { try { return crypto.randomUUID(); } catch (e) {} }
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 3 | 8)).toString(16);
+        });
+    }
 
-                var hotGrid = document.getElementById('hot-grid');
-                hotEntries.forEach(function (entry) {
-                    var clone = entry.card.cloneNode(true);
-                    var cloneButton = clone.querySelector('.btn-download');
-                    var cloneCount = clone.querySelector('.download-count');
-                    bindDownloadButton(cloneButton, entry.key, entry.url, entry.file, cloneCount);
-                    hotGrid.appendChild(clone);
-                });
+    /* D-pad / arrow navigation between tiles (TV remote) */
+    document.addEventListener('keydown', function (ev) {
+        var cur = ev.target.closest && ev.target.closest('.app-tile');
+        var dir = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[ev.key];
+        if (!cur || !dir || document.querySelector('dialog[open]')) return;
+        var o = cur.getBoundingClientRect(), best = null, bestScore = Infinity;
+        document.querySelectorAll('.app-tile').forEach(function (c) {
+            if (c === cur) return;
+            var r = c.getBoundingClientRect();
+            var dx = (r.left + r.right - o.left - o.right) / 2, dy = (r.top + r.bottom - o.top - o.bottom) / 2;
+            var p = dx * dir[0] + dy * dir[1], cross = Math.abs(dx * dir[1] + dy * dir[0]);
+            if (p <= 8 || (dir[0] && cross > o.height / 2)) return;
+            var s = p + cross * 2; if (s < bestScore) { best = c; bestScore = s; }
+        });
+        if (!best && dir[1] === -1) best = document.querySelector('.action');
+        if (best) { ev.preventDefault(); best.focus(); best.scrollIntoView({ block: 'nearest' }); }
+    });
 
-                document.getElementById('cat-hot').style.display = '';
-                document.getElementById('nav-hot').style.display = '';
-            }
-        })();
-    </script>
+    /* Dialogs */
+    document.querySelectorAll('[data-open]').forEach(function (b) {
+        b.addEventListener('click', function () { document.getElementById(b.dataset.open).showModal(); });
+    });
+    document.querySelectorAll('[data-close]').forEach(function (b) {
+        b.addEventListener('click', function () { b.closest('dialog').close(); });
+    });
+    document.querySelectorAll('dialog').forEach(function (d) {
+        d.addEventListener('click', function (ev) { if (ev.target === d) d.close(); });
+    });
 
+    /* Adaptive glass tint */
+    function onScroll() { document.body.classList.toggle('scrolled', window.scrollY > 8); }
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+    /* Fullscreen */
+    var fs = document.getElementById('fullscreen'), root = document.documentElement;
+    if (document.fullscreenEnabled && root.requestFullscreen) {
+        fs.hidden = false;
+        fs.addEventListener('click', function () {
+            (document.fullscreenElement ? document.exitFullscreen() : root.requestFullscreen()).catch(function () {});
+        });
+    }
+
+    var first = catalog.querySelector('.app-tile'); if (first) first.focus({ preventScroll: true });
+})();
+</script>
 </body>
 </html>
-
