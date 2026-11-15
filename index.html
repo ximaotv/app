@@ -33,13 +33,14 @@ a { color: inherit; text-decoration: none; }
 :focus { outline: none; }
 * { -webkit-tap-highlight-color: transparent; }
 /* Capsule-following orange focus ring (box-shadow follows border-radius, outline does not on old TV WebViews) */
-.glass:focus, .contact:focus, .app-tile:focus,
-.glass:hover, .contact:hover, .app-tile:hover {
+.glass:focus, .app-tile:focus,
+.glass:hover, .app-tile:hover {
     outline: none;
     box-shadow: 0 0 0 3px #fff, 0 0 0 7px var(--orange), 0 0 18px 4px #ff8a3d66;
 }
 .glass:focus, .glass:hover { --glass-alpha: .6; transform: scale(1.06); }
-.contact:focus, .contact:hover { background: #ffffff26; transform: scale(1.03); }
+
+.panel .close:focus, .panel .close:hover { transform: none; box-shadow: inset 0 0 0 3px var(--orange), inset 0 1px 0 #ffffff5c; }
 .app-tile:focus, .app-tile:hover { background: var(--surface-hi); transform: scale(1.04); }
 
 /* ---------- Liquid Glass (controls only) ---------- */
@@ -146,10 +147,10 @@ a { color: inherit; text-decoration: none; }
 /* ---------- Dialogs (floating glass panels) ---------- */
 dialog {
     border: 0; padding: 0; background: transparent; color: var(--ink);
-    max-width: min(420px, calc(100vw - 32px)); width: 100%;
+    max-width: calc(100vw - 32px); width: 460px;
 }
 dialog::backdrop { background: #0009; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
-.panel { border-radius: 34px; padding: 22px 26px; display: grid; gap: 12px; max-height: 92vh; overflow: auto; text-align: center; --glass-alpha: .72; cursor: default; }
+.panel { border-radius: 34px; padding: 22px 26px; width: 460px; max-width: 100%; display: grid; gap: 12px; max-height: 92vh; overflow: auto; text-align: center; --glass-alpha: .72; cursor: default; }
 .panel h2 { margin: 0; font-size: 1.3rem; }
 .panel p { margin: 0; color: var(--muted); font-size: .92rem; }
 .qr {
@@ -162,11 +163,12 @@ dialog::backdrop { background: #0009; -webkit-backdrop-filter: blur(6px); backdr
     display: flex; align-items: center; gap: 14px; text-align: left;
     padding: 12px 16px; border-radius: 20px; background: #ffffff12;
 }
-.contact:hover { background: #ffffff24; }
 .contact { transition: transform .2s, background-color .2s; }
 .contact b { display: block; }
 .contact span { color: var(--muted); font-size: .88rem; }
 .brand-ico { width: 44px; height: 44px; flex: none; }
+.contact > div { flex: 1; min-width: 0; }
+.contact-qr { width: 96px; height: 96px; flex: none; border-radius: 10px; background: #fff; image-rendering: pixelated; }
 .close { padding: 12px; font-weight: 700; }
 
 .download-toast {
@@ -199,7 +201,7 @@ dialog::backdrop { background: #0009; -webkit-backdrop-filter: blur(6px); backdr
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { transition: none !important; }
-    .app-tile:focus, .glass:focus, .contact:focus, .glass:active { transform: none; }
+    .app-tile:focus, .glass:focus, .glass:active { transform: none; }
 }
 @media (forced-colors: active) {
     .glass, .app-tile { border: 1px solid ButtonText; }
@@ -255,16 +257,17 @@ dialog::backdrop { background: #0009; -webkit-backdrop-filter: blur(6px); backdr
 <dialog id="dlg-contact" aria-labelledby="t-contact">
     <div class="panel glass">
         <h2 id="t-contact">Liên hệ hỗ trợ cài đặt</h2>
+        <p>Quét mã bằng điện thoại để mở Zalo / Facebook</p>
         <div class="contact-list">
-            <a class="contact" href="tel:+84343220893">
+            <div class="contact">
                 <svg class="brand-ico" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#34c759"/><path fill="#fff" d="M18.6 12.4c-.6-1.3-2-1.9-3.3-1.4l-2.8 1c-1.3.5-2.1 1.8-2 3.2.5 6.6 3.3 12.8 8 17.5s10.9 7.5 17.5 8c1.4.1 2.7-.7 3.2-2l1-2.8c.5-1.3-.1-2.7-1.4-3.3l-4.7-2.2c-1.1-.5-2.4-.2-3.2.7l-1.7 2c-3.6-1.7-6.6-4.7-8.3-8.3l2-1.7c.9-.8 1.2-2.1.7-3.2l-2.2-4.7z"/></svg>
-                <div><b>Điện thoại</b><span>0343.22.08.93</span></div></a>
-            <a class="contact" href="https://zalo.me/0343220893" target="_blank" rel="noopener">
+                <div><b>Điện thoại</b><span>0343.22.08.93</span></div></div>
+            <div class="contact">
                 <svg class="brand-ico" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#0068ff"/><path fill="#fff" d="M24 8C14.1 8 6 14.6 6 22.8c0 4.6 2.6 8.8 6.6 11.5L11 40.5l7.1-3.7c1.9.5 3.9.8 5.9.8 9.9 0 18-6.6 18-14.8S33.9 8 24 8z"/><text x="24" y="27.6" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="10.5" fill="#0068ff">Zalo</text></svg>
-                <div><b>Zalo</b><span>0343.22.08.93</span></div></a>
-            <a class="contact" href="https://fb.com/vietxiaomi93" target="_blank" rel="noopener">
+                <div><b>Zalo</b><span>0343.22.08.93</span></div><img class="contact-qr" src="icons/qr-zalo.png" alt="Mã QR Zalo"></div>
+            <div class="contact">
                 <svg class="brand-ico" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="24" fill="#0866ff"/><path fill="#fff" d="M26.6 48V31h5.4l.9-6.6h-6.3v-4.2c0-1.9.5-3.2 3.3-3.2h3.3v-5.9c-.6-.1-2.6-.3-4.9-.3-4.8 0-8.1 2.9-8.1 8.4v5.2h-5.4V31h5.4v17z"/></svg>
-                <div><b>Facebook</b><span>fb.com/vietxiaomi93</span></div></a>
+                <div><b>Facebook</b><span>fb.com/vietxiaomi93</span></div><img class="contact-qr" src="icons/qr-fb.png" alt="Mã QR Facebook"></div>
         </div>
         <button type="button" class="glass close" data-close>Đóng</button>
     </div>
@@ -287,6 +290,7 @@ dialog::backdrop { background: #0009; -webkit-backdrop-filter: blur(6px); backdr
             ['Ximao Film', 'app-ximaofilm', 'ximaofilm.apk'],
             ['Phim4K', 'app-phim4k', 'phim4k.apk'],
             ['Chợ Phim', 'app-chophim', 'chophim.apk'],
+			['Cinema AI', app-cinema', 'cinema.apk'],
             ['NVC Phim', 'app-NVC', 'NVC.apk'],
             ['Sài Gòn Phim', 'app-saigonphim', 'sgphim.apk'],
             ['Rạp Phim', 'app-rapphim', 'rapphim.apk'],
